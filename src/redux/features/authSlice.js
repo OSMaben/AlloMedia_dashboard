@@ -22,7 +22,7 @@ export const registers = createAsyncThunk(
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "http://localhost:8080/api/auth/register",
         data,
         {
           headers: {
@@ -49,7 +49,7 @@ export const login = createAsyncThunk("auth/login", async (data, thunkAPI) => {
   console.log("Data being sent to API:", data);
 
   try {
-    const res = await axios.post("http://localhost:5000/api/auth/login", data, {
+    const res = await axios.post("http://localhost:8080/api/auth/login", data, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -79,7 +79,7 @@ export const verifyOtp = createAsyncThunk(
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/auth/verifyAcount/${state.token}`,
+        `http://localhost:8080/api/auth/verifyAcount/${state.token}`,
         data,
         {
           headers: {
@@ -107,7 +107,7 @@ export const forgetPassword = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/auth//forgetpassword`,
+        `http://localhost:8080/api/auth//forgetpassword`,
         data,
         {
           headers: {
@@ -139,7 +139,7 @@ export const UpdatePassword = createAsyncThunk(
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/auth/resetpassword/${state.token}`,
+        `http://localhost:8080/api/auth/resetpassword/${state.token}`,
         data,
         {
           headers: {
@@ -163,7 +163,7 @@ export const Deconxion = createAsyncThunk(
     const token = localStorage.getItem("token");
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/logout`, {
+      const res = await axios.get(`http://localhost:8080/api/auth/logout`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -185,7 +185,7 @@ export const verifier2FA = createAsyncThunk(
     const state = thunkAPI.getState().auth;
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/auth/verify-otp/${state.token}`,
+        `http://localhost:8080/api/auth/verify-otp/${state.token}`,
         data,
         {
           headers: {
@@ -212,7 +212,7 @@ export const isLogins = createAsyncThunk(
   "auth/isLogins",
   async (token, thunkAPI) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/auth/islogin/`, {
+      const res = await axios.get(`http://localhost:8080/api/auth/islogin/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -240,7 +240,7 @@ export const UpdatePassword1 = createAsyncThunk(
 
     try {
       const res = await axios.post(
-        `http://localhost:5000/api/auth/upditPassword`,
+        `http://localhost:8080/api/auth/upditPassword`,
         data,
         {
           headers: {
@@ -271,7 +271,7 @@ export const resendVerification = createAsyncThunk(
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/auth/resendVerification`,
+        `http://localhost:8080/api/auth/resendVerification`,
         {
           headers: {
             "Content-Type": "application/json",

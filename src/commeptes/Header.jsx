@@ -3,6 +3,9 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Deconxion } from "../redux/features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartPie, faUser, faUserCircle, faKey } from "@fortawesome/free-solid-svg-icons";
+
 
 const Header = () => {
   const { isLogin } = useSelector((state) => state.auth);
@@ -16,136 +19,57 @@ const Header = () => {
     navigate("/");
   }, [dispatch, navigate]);
 
-  const toggleMenu = () => setMenuOpen((prev) => !prev);
-  const handleMenuClose = () => setMenuOpen(false);
 
-  const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/verfei", label: "Verfei" },
-    { path: "/features", label: "Features" },
-    { path: "/pricing", label: "Pricing" },
-    { path: "/blog", label: "Blog" },
-  ];
-
-  const menuVariants = {
-    open: { opacity: 1, y: 0, x: 0, transition: { duration: 0.5, ease: "easeInOut" } },
-    closed: { opacity: 0, y: -20, x: -20, transition: { duration: 0.3, ease: "easeInOut" } },
-  };
 
   return (
-    <header className=" bg-white shadow-md w-full z-50">
-      <div className="container xl:w-[90%]  mx-auto  flex items-center justify-between p-5">
-        {/* Logo */}
-        <NavLink to="/" className="flex items-center">
-          <img
-            className="w-[140px] h-auto"
-            src="../../public/images/logo1.png"
-            alt="Logo"
-          />
-        </NavLink>
+      <>
+      <nav
+          className="absolute top-0 z-30 flex flex-wrap items-center justify-between w-full px-4 py-2 mt-6 mb-4 shadow-none lg:flex-nowrap lg:justify-start ">
+        <div className="container flex items-center justify-between py-0 flex-wrap-inherit">
 
-        {/* Burger Menu Icon for Mobile and Tablets */}
-        <button onClick={toggleMenu} className="block md:hidden focus:outline-none">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
-            />
-          </svg>
-        </button>
+          <div
+               className="items-center flex-grow transition-all ease-soft duration-350 lg-max:bg-white lg-max:max-h-0 lg-max:overflow-hidden basis-full rounded-xl lg:flex lg:basis-auto">
 
-        {/* Navigation Links for Large Screens */}
-        <nav className="hidden md:flex md:flex-row space-x-8 text-sm font-medium text-gray-700">
-          {navItems.map(({ path, label }) => (
-            <NavLink key={path} to={path} className="hover:text-gray-900 transition duration-300  ease-in-out transform hover:-translate-y-1">
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-
-        {/* Buttons for Large Screens */}
-        <div className="hidden md:flex items-center space-x-6">
-          {!isLogin ? (
-            <>
-              <NavLink to="/signin" className="font-medium text-gray-600 text-sm hover:text-gray-900">
-                Sign in
-              </NavLink>
-              <NavLink to="/signup" className="px-3 py-2 text-white bg-indigo-600 text-sm rounded hover:bg-indigo-500 transition duration-300">
-                Sign up
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink to="/profile" className="px-3 py-2 text-sm text-white bg-indigo-600 rounded hover:bg-indigo-500 transition duration-300">
-                Profile
-              </NavLink>
-              <button onClick={logout} className="px-3 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-700 transition duration-300">
-                Log out
-              </button>
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <motion.nav
-          initial="closed"
-          animate="open"
-          exit="closed"
-          variants={menuVariants}
-          className="md:hidden container mx-auto flex flex-col items-start bg-white shadow-lg py-5 space-y-4"
-        >
-          {navItems.map(({ path, label }) => (
-            <motion.div
-              key={path}
-              
-              className="w-full px-4 py-2 text-sm"
-              onClick={handleMenuClose}
-            >
-              <NavLink to={path} className="text-sm font-medium text-gray-700 hover:text-gray-900 w-full text-left">
-                {label}
-              </NavLink>
-            </motion.div>
-          ))}
-          {!isLogin ? (
-            <>
-              <motion.div className="w-full px-4 py-2" onClick={handleMenuClose}>
-                <NavLink to="/signin" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-                  Sign in
+            <ul className="flex flex-col pl-0 mx-auto mb-0 list-none lg:flex-row xl:ml-auto">
+              <li>
+                <NavLink to={'/dashboard'} className="flex items-center px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-sm lg:px-2 lg:hover:text-white/75"
+                   aria-current="page" href="../pages/dashboard.html">
+                  <FontAwesomeIcon icon={faChartPie} className="mr-1" />
+                  Dashboard
                 </NavLink>
-              </motion.div>
-              <motion.div className="w-full px-4 py-2" onClick={handleMenuClose}>
-                <NavLink to="/signup" className="px-6 text-sm py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition duration-300">
-                  Sign up
-                </NavLink>
-              </motion.div>
-            </>
-          ) : (
-            <>
-              <motion.div className="w-full px-4 py-2" onClick={handleMenuClose}>
-                <NavLink to="/profile" className="px-6 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition duration-300">
+              </li>
+              <li>
+                <NavLink to={'/profile'} className="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-sm lg:px-2 lg:hover:text-white/75"
+                   href="../pages/profile.html">
+                  <FontAwesomeIcon icon={faUser} className="mr-1" />
                   Profile
                 </NavLink>
-              </motion.div>
-              <motion.div className="w-full px-4 py-2" onClick={() => { logout(); handleMenuClose(); }}>
-                <button className="px-6 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700 transition duration-300">
-                  Log out
-                </button>
-              </motion.div>
-            </>
-          )}
-        </motion.nav>
-      )}
-    </header>
+              </li>
+              <li>
+                <NavLink to={'signup'} className="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-sm lg:px-2 lg:hover:text-white/75"
+                   >
+                  <FontAwesomeIcon icon={faUserCircle} className="mr-1" />
+                  Sign Up
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={'signin'} className="block px-4 py-2 mr-2 font-normal text-white transition-all duration-250 lg-max:opacity-0 lg-max:text-slate-700 ease-soft-in-out text-sm lg:px-2 lg:hover:text-white/75"
+                   >
+                  <FontAwesomeIcon icon={faKey} className="mr-1" />
+                  Sign In
+                </NavLink>
+              </li>
+            </ul>
+            <ul className="hidden pl-0 mb-0 list-none lg:block lg:flex-row">
+              <li>
+                <a href="https://www.creative-tim.com/product/soft-ui-dashboard-tailwind" target="_blank"
+                   className="leading-pro hover:scale-102 hover:shadow-soft-xs active:opacity-85 ease-soft-in text-xs tracking-tight-soft shadow-soft-md bg-gradient-to-tl from-gray-400 to-gray-100 rounded-3.5xl mb-0 mr-1 inline-block cursor-pointer border-0 bg-transparent px-8 py-2 text-center align-middle font-bold uppercase text-slate-800 transition-all">Discover</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      </>
   );
 };
 

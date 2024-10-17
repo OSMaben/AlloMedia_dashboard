@@ -35,8 +35,8 @@ const VerifyLogin = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <div className="w-full max-w-sm">
+    <div className="flex flex-col items-center justify-center">
+      <div className="w-full max-w-sm mt-[-4rem] z-50">
         <div className="rounded-2xl bg-white p-6 shadow">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Verify Your Login

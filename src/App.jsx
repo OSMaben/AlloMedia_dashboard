@@ -14,6 +14,7 @@ import ProtectedRoute from "./gaurd/ProtectedRouteProfile";
 import ProtectedRoutAuth from "./gaurd/ProtectedRoutAuth";
 import PasswordForm from "./commeptes/PasswordForm";
 import About from "./commeptes/About";
+import Search from "./pages/Search";
 
 function App() {
   const { error, status, isLogin } = useSelector((state) => state.auth);
@@ -33,8 +34,10 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home></Home>}></Route>
+          <Route path="/search" element={<Search></Search>}></Route>
 
-          <Route
+
+          <Route     
             path="/signin"
             element={
               <ProtectedRoutAuth>

@@ -28,7 +28,7 @@ const Login = () => {
             style={{backgroundImage: `url(${Back})`}}>
           <span
               className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800 opacity-60"></span>
-          <div className="container z-10">
+          <div className="container z-10 m-auto">
             <div className="flex flex-wrap justify-center -mx-3">
               <div className="w-full max-w-full px-3 mx-auto mt-0 text-center lg:flex-0 shrink-0 lg:w-5/12">
                 <h1 className="mt-12 mb-2 text-white text-[4rem] font-bold">Welcome !</h1>
@@ -37,7 +37,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-        <div className="container">
+        <div className="container m-auto">
           {status ? (
               <ModalVerfieLogin/>
           ) : (

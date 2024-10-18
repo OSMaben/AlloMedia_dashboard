@@ -38,7 +38,7 @@ const Register = () => {
         <section className="min-h-screen mb-32">
           <div className="relative flex items-start pt-12 pb-56 m-4 overflow-hidden bg-center bg-cover min-h-50-screen rounded-xl" style={{backgroundImage: `url(${Back})`}}>
             <span className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800 opacity-60"></span>
-            <div className="container z-10">
+            <div className="container z-10 m-auto">
               <div className="flex flex-wrap justify-center -mx-3">
                 <div className="w-full max-w-full px-3 mx-auto mt-0 text-center lg:flex-0 shrink-0 lg:w-5/12">
                   <h1 className="mt-12 mb-2 text-white text-[4rem] font-bold">Welcome!</h1>
@@ -47,7 +47,7 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <div className="container">
+          <div className="container m-auto">
             <div className="flex flex-wrap -mx-3 -mt-48 md:-mt-56 lg:-mt-48">
               <div className="w-full max-w-full px-3 mx-auto mt-0 md:flex-0 shrink-0 md:w-7/12 lg:w-5/12 xl:w-4/12">
                 <div className="relative z-0 flex flex-col min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">

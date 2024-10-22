@@ -56,7 +56,7 @@ const TablesResto = () => {
         />
       </nav>
 
-      {/* Table Section */}
+      
       <section className="flex-1 px-4 py-6">
         <div className="overflow-x-auto">
           <table className="min-w-[600px] w-full divide-y divide-gray-200 bg-white shadow-md border rounded-lg">

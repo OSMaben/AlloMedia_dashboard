@@ -362,7 +362,7 @@ const authSlice = createSlice({
         console.log(state.token);
       })
       .addCase(login.rejected, (state, action) => {
-        console.log(action.payload.response.data.message);
+        console.log("asdasd from redux", action.payload.response.data.message);
         state.isLoading = false;
         state.error = action.payload.response.data.message;
         state.status = false;

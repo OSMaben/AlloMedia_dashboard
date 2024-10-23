@@ -3,6 +3,39 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Deconxion } from "../redux/features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartPie, faUser, faUserCircle, faKey } from "@fortawesome/free-solid-svg-icons";
+import {
+  Navbar as MTNavbar,
+  Collapse,
+  Button,
+  IconButton,
+  Typography,
+} from "@material-tailwind/react";
+import { XMarkIcon, Bars3Icon } from "@heroicons/react/24/solid";
+
+const NAV_MENU = [
+  {
+    name: "Home",
+    icon: faChartPie,
+    path: "/",
+  },
+  {
+    name: "Profile",
+    icon: faUser,
+    path: "/profile",
+  },
+  {
+    name: "Sign Up",
+    icon: faUserCircle,
+    path: "/signup",
+  },
+  {
+    name: "Sign In",
+    icon: faKey,
+    path: "/signin",
+  },
+];
 
 const Header = () => {
   const { isLogin } = useSelector((state) => state.auth);
@@ -16,136 +49,81 @@ const Header = () => {
     navigate("/");
   }, [dispatch, navigate]);
 
-  const toggleMenu = () => setMenuOpen((prev) => !prev);
-  const handleMenuClose = () => setMenuOpen(false);
-
-  const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/verfei", label: "Verfei" },
-    { path: "/features", label: "Features" },
-    { path: "/pricing", label: "Pricing" },
-    { path: "/blog", label: "Blog" },
-  ];
-
-  const menuVariants = {
-    open: { opacity: 1, y: 0, x: 0, transition: { duration: 0.5, ease: "easeInOut" } },
-    closed: { opacity: 0, y: -20, x: -20, transition: { duration: 0.3, ease: "easeInOut" } },
+  const handleOpen = () => {
+    setMenuOpen((cur) => !cur);
   };
 
   return (
-    <header className=" bg-white shadow-md w-full z-50">
-      <div className="container xl:w-[90%]  mx-auto  flex items-center justify-between p-5">
-        {/* Logo */}
-        <NavLink to="/" className="flex items-center">
-          <img
-            className="w-[140px] h-auto"
-            src="../../public/images/logo1.png"
-            alt="Logo"
-          />
-        </NavLink>
-
-        {/* Burger Menu Icon for Mobile and Tablets */}
-        <button onClick={toggleMenu} className="block md:hidden focus:outline-none">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+      <div className="px-10 sticky top-4 z-50">
+        <div className="mx-auto container">
+          <MTNavbar
+              blurred
+              color="white"
+              className="z-50 mt-6 relative border-0 pr-3 py-3 pl-6"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
-            />
-          </svg>
-        </button>
-
-        {/* Navigation Links for Large Screens */}
-        <nav className="hidden md:flex md:flex-row space-x-8 text-sm font-medium text-gray-700">
-          {navItems.map(({ path, label }) => (
-            <NavLink key={path} to={path} className="hover:text-gray-900 transition duration-300  ease-in-out transform hover:-translate-y-1">
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-
-        {/* Buttons for Large Screens */}
-        <div className="hidden md:flex items-center space-x-6">
-          {!isLogin ? (
-            <>
-              <NavLink to="/signin" className="font-medium text-gray-600 text-sm hover:text-gray-900">
-                Sign in
-              </NavLink>
-              <NavLink to="/signup" className="px-3 py-2 text-white bg-indigo-600 text-sm rounded hover:bg-indigo-500 transition duration-300">
-                Sign up
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink to="/profile" className="px-3 py-2 text-sm text-white bg-indigo-600 rounded hover:bg-indigo-500 transition duration-300">
-                Profile
-              </NavLink>
-              <button onClick={logout} className="px-3 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-700 transition duration-300">
-                Log out
-              </button>
-            </>
-          )}
+            <div className="flex items-center justify-between">
+              <Typography color="blue-gray" className="text-lg font-bold">
+                My Application
+              </Typography>
+              <ul className="ml-10 hidden items-center gap-8 lg:flex">
+                {NAV_MENU.map(({ name, icon, path }) => (
+                    <li key={name}>
+                      <NavLink
+                          to={path}
+                          className="flex items-center px-4 py-2 font-normal text-gray-900 transition-all duration-250 lg:hover:text-blue-700"
+                          aria-current="page"
+                      >
+                        <FontAwesomeIcon icon={icon} className="mr-1" />
+                        {name}
+                      </NavLink>
+                    </li>
+                ))}
+              </ul>
+              <div className="hidden items-center gap-4 lg:flex">
+                <Button variant="text" onClick={logout}>Log out</Button>
+                <a href="https://www.creative-tim.com/product/soft-ui-dashboard-tailwind" target="_blank">
+                  <Button color="gray">Discover</Button>
+                </a>
+              </div>
+              <IconButton
+                  variant="text"
+                  color="gray"
+                  onClick={handleOpen}
+                  className="ml-auto inline-block lg:hidden"
+              >
+                {menuOpen ? (
+                    <XMarkIcon strokeWidth={2} className="h-6 w-6" />
+                ) : (
+                    <Bars3Icon strokeWidth={2} className="h-6 w-6" />
+                )}
+              </IconButton>
+            </div>
+            <Collapse open={menuOpen}>
+              <div className="container mx-auto mt-3 border-t border-gray-200 px-2 pt-4">
+                <ul className="flex flex-col gap-4">
+                  {NAV_MENU.map(({ name, icon, path }) => (
+                      <li key={name}>
+                        <NavLink
+                            to={path}
+                            className="flex items-center px-4 py-2 font-normal text-gray-900 transition-all duration-250 lg:hover:text-blue-700"
+                        >
+                          <FontAwesomeIcon icon={icon} className="mr-1" />
+                          {name}
+                        </NavLink>
+                      </li>
+                  ))}
+                </ul>
+                <div className="mt-6 mb-4 flex items-center gap-4">
+                  <Button variant="text" onClick={logout}>Log out</Button>
+                  <a href="https://www.creative-tim.com/product/soft-ui-dashboard-tailwind" target="_blank">
+                    <Button color="gray">Discover</Button>
+                  </a>
+                </div>
+              </div>
+            </Collapse>
+          </MTNavbar>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <motion.nav
-          initial="closed"
-          animate="open"
-          exit="closed"
-          variants={menuVariants}
-          className="md:hidden container mx-auto flex flex-col items-start bg-white shadow-lg py-5 space-y-4"
-        >
-          {navItems.map(({ path, label }) => (
-            <motion.div
-              key={path}
-              
-              className="w-full px-4 py-2 text-sm"
-              onClick={handleMenuClose}
-            >
-              <NavLink to={path} className="text-sm font-medium text-gray-700 hover:text-gray-900 w-full text-left">
-                {label}
-              </NavLink>
-            </motion.div>
-          ))}
-          {!isLogin ? (
-            <>
-              <motion.div className="w-full px-4 py-2" onClick={handleMenuClose}>
-                <NavLink to="/signin" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-                  Sign in
-                </NavLink>
-              </motion.div>
-              <motion.div className="w-full px-4 py-2" onClick={handleMenuClose}>
-                <NavLink to="/signup" className="px-6 text-sm py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition duration-300">
-                  Sign up
-                </NavLink>
-              </motion.div>
-            </>
-          ) : (
-            <>
-              <motion.div className="w-full px-4 py-2" onClick={handleMenuClose}>
-                <NavLink to="/profile" className="px-6 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition duration-300">
-                  Profile
-                </NavLink>
-              </motion.div>
-              <motion.div className="w-full px-4 py-2" onClick={() => { logout(); handleMenuClose(); }}>
-                <button className="px-6 py-2 text-white bg-red-500 rounded-lg hover:bg-red-700 transition duration-300">
-                  Log out
-                </button>
-              </motion.div>
-            </>
-          )}
-        </motion.nav>
-      )}
-    </header>
   );
 };
 

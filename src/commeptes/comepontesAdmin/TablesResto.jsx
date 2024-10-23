@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getrestaurantsapproved } from "../../redux/features/adminSlice";
+import { deleteRestaurant, getrestaurantsapproved } from "../../redux/features/adminSlice";
 import { FaTrashAlt, FaBan } from "react-icons/fa";
 
 const TablesResto = () => {
@@ -9,7 +9,7 @@ const TablesResto = () => {
     (state) => state.admin
   );
   const [filteredRestaurants, setFilteredRestaurants] = useState(restaurantsapproved);
-
+  
   // Fetch restaurants and filter list when updated
   useEffect(() => {
     dispatch(getrestaurantsapproved());
@@ -28,7 +28,7 @@ const TablesResto = () => {
   };
 
   const handleDelete = (id) => {
-    // dispatch(deleteResto({ id }));
+    dispatch(deleteRestaurant({ id }));
   };
 
   const handleSuspend = (id) => {

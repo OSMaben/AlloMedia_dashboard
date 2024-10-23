@@ -6,11 +6,14 @@ import {
   refuseResto,
 } from "../../redux/features/adminSlice";
 
+
 const TablesDemande = () => {
   const dispatch = useDispatch();
   const { error, status, isLoading, resturs, restoCounter } = useSelector(
     (state) => state.admin
   );
+
+ 
   useEffect(() => {
     dispatch(getRestoPending());
   }, [restoCounter]);
@@ -75,14 +78,6 @@ const TablesDemande = () => {
                 <td className="relative py-3 px-2 w-full sm:w-1/5">
                   <div className="relative group">
                     <span className="truncate flex items-center gap-1">
-                      {/* {item.logo.url && (
-                        <img
-                          className="w-8 h-8 rounded-full"
-                          src={item.logo.url}
-                          alt="John Doe"
-                        />
-                      )} */}
-
                       {item.restoname}
                     </span>
                     <div className="absolute left-0 hidden group-hover:block bg-white border rounded shadow-md p-2 z-10">

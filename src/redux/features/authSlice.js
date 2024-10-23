@@ -294,7 +294,9 @@ export const resendVerification = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    
+  },
   extraReducers: (builder) => {
     builder
       // Register user
@@ -529,7 +531,7 @@ const authSlice = createSlice({
         state.status = null;
         state.isLogin = true;
         console.log(action.payload);
-        
+
         state.error = null;
       })
       .addCase(isLogins.rejected, (state, action) => {
@@ -540,5 +542,4 @@ const authSlice = createSlice({
       });
   },
 });
-
 export default authSlice.reducer;

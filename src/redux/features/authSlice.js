@@ -12,6 +12,7 @@ const initialState = {
   isLogin: false,
   messageForgetPassword: null,
   message: null,
+  isAdmin: true,
 };
 
 // Create async thunk for registering a user
@@ -293,7 +294,9 @@ export const resendVerification = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    
+  },
   extraReducers: (builder) => {
     builder
       // Register user
@@ -519,7 +522,6 @@ const authSlice = createSlice({
 
     builder
       .addCase(isLogins.pending, (state) => {
-        
         state.error = null;
       })
       .addCase(isLogins.fulfilled, (state, action) => {
@@ -528,6 +530,8 @@ const authSlice = createSlice({
         state.error = null;
         state.status = null;
         state.isLogin = true;
+        console.log(action.payload);
+
         state.error = null;
       })
       .addCase(isLogins.rejected, (state, action) => {
@@ -538,5 +542,4 @@ const authSlice = createSlice({
       });
   },
 });
-
 export default authSlice.reducer;

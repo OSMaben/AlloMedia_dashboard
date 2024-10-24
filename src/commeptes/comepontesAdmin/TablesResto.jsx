@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteRestaurant, getrestaurantsapproved } from "../../redux/features/adminSlice";
+import {
+  deleteRestaurant,
+  getrestaurantsapproved,
+  suspendResto,
+} from "../../redux/features/adminSlice";
 import { FaTrashAlt, FaBan } from "react-icons/fa";
 
 const TablesResto = () => {
@@ -8,8 +12,9 @@ const TablesResto = () => {
   const { restaurantsapproved, restoCounter } = useSelector(
     (state) => state.admin
   );
-  const [filteredRestaurants, setFilteredRestaurants] = useState(restaurantsapproved);
-  
+  const [filteredRestaurants, setFilteredRestaurants] =
+    useState(restaurantsapproved);
+
   // Fetch restaurants and filter list when updated
   useEffect(() => {
     dispatch(getrestaurantsapproved());
@@ -32,7 +37,9 @@ const TablesResto = () => {
   };
 
   const handleSuspend = (id) => {
-    // dispatch(suspendResto({ id }));
+    console.log(id);
+    
+    dispatch(suspendResto({ id }));
   };
 
   return (
@@ -40,14 +47,20 @@ const TablesResto = () => {
       {/* Hero Section */}
       <div className="w-full h-64 bg-gradient-to-r from-purple-600 to-indigo-600 flex items-center justify-center">
         <div className="text-white text-center">
-          <h1 className="text-3xl sm:text-4xl font-bold">Accepted Restaurants</h1>
-          <p className="mt-2 text-sm sm:text-lg">Manage approved restaurants here.</p>
+          <h1 className="text-3xl sm:text-4xl font-bold">
+            Accepted Restaurants
+          </h1>
+          <p className="mt-2 text-sm sm:text-lg">
+            Manage approved restaurants here.
+          </p>
         </div>
       </div>
 
       {/* Search Bar */}
       <nav className="bg-white py-4 px-6 flex flex-col sm:flex-row justify-between items-center shadow-md">
-        <h2 className="text-base sm:text-lg font-semibold">Manage Restaurants</h2>
+        <h2 className="text-base sm:text-lg font-semibold">
+          Manage Restaurants
+        </h2>
         <input
           onChange={searchByName}
           type="text"
@@ -56,30 +69,66 @@ const TablesResto = () => {
         />
       </nav>
 
-      
       <section className="flex-1 px-4 py-6">
         <div className="overflow-x-auto">
-          <table className="min-w-[600px] w-full divide-y divide-gray-200 bg-white shadow-md border rounded-lg">
+          <table className="min-w-full divide-y divide-gray-200 bg-white shadow-md border rounded-lg">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-500">Restaurant Name</th>
-                <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-500">Manager</th>
-                <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-500">Cuisine</th>
-                <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-500">Actions</th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500">
+                  Restaurant Name
+                </th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500">
+                  Manager
+                </th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500">
+                  Status
+                </th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500">
+                  Cuisine
+                </th>
+                <th className="px-4 py-3 text-left text-xs sm:text-sm font-medium text-gray-500">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredRestaurants?.map((item) => (
-                <tr key={item._id}>
-                  <td className="px-4 py-2">{item.restoname}</td>
-                  <td className="px-4 py-2">John Doe</td>
-                  <td className="px-4 py-2">{item.cuisine || "Italian"}</td>
-                  <td className="px-4 py-2">
+              {restaurantsapproved.map((item) => (
+                <tr
+                  key={item._id}
+                  className="hover:bg-gray-100 transition duration-150"
+                >
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {item.restoname}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {item.managerId.name}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {item.isVisible ? (
+                      <span className="bg-green-500 text-white text-xs p-1 px-2 rounded-full">
+                        Visible
+                      </span>
+                    ) : (
+                      <span className="bg-red-500 text-white text-xs p-1 px-2 rounded-full">
+                        Banner
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
+                    {item.cuisine || "Italian"}
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap">
                     <div className="flex space-x-4">
-                      <button onClick={() => handleDelete(item._id)} className="text-red-600">
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="text-red-600 hover:text-red-800"
+                      >
                         <FaTrashAlt />
                       </button>
-                      <button onClick={() => handleSuspend(item._id)} className="text-yellow-500">
+                      <button
+                        onClick={() => handleSuspend(item._id)}
+                        className="text-yellow-500 hover:text-yellow-700"
+                      >
                         <FaBan />
                       </button>
                     </div>

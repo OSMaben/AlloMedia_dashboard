@@ -23,6 +23,21 @@ import TablesResto from "./commeptes/comepontesAdmin/TablesResto";
 import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
 import Dashboards from "./pages/Dashboards";
 
+//livreur
+import DashboardLivreur from "./livreur/dashbord";
+import NotificationsLiv from "./commeptes/componentLivreur/Notification";
+import MainsLiv from "./commeptes/componentLivreur/Mains";
+
+
+
+
+
+
+
+
+
+
+
 function App() {
   const { error, status, isLogin } = useSelector((state) => state.auth);
 
@@ -51,10 +66,21 @@ function App() {
             </ProtectedRouteAdmin>
           }
         >
+
+
+        <Route path="/dashboard" element={<ProtectedRouteAdmin><Dashboard /></ProtectedRouteAdmin>}>
+
           <Route path="notifications" element={<Notifications />} />
           <Route index element={<Mains />} />
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />
+
+        </Route>
+
+        <Route path="/livreur" element={<ProtectedRouteAdmin><DashboardLivreur /></ProtectedRouteAdmin>}>
+          <Route path="notifications" element={<NotificationsLiv />} />
+          <Route index element={<MainsLiv />} />
+
         </Route>
         <Route
           path="/signin"
@@ -121,7 +147,21 @@ function App() {
             }
           />
         </Route>
+        <Route
+          path="/updit-password"
+          element={
+            <ProtectedRoutAuth>
+              <UpdatPassword />
+            </ProtectedRoutAuth>
+          }
+        />
+
+       
+
       </Routes>
+
+
+
     </>
   );
 }

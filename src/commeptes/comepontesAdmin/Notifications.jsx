@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import formattedDate from "../../utils/formateData";
 import { io } from "socket.io-client";
 import {
   addNotification,
@@ -54,18 +55,20 @@ const Notifications = () => {
               <span className="flex-none pt-1 pr-2">
                 <img
                   className="h-8 w-8 rounded-md"
-                  src="https://via.placeholder.com/150"
+                  src={item.mangerId.imgProfile.url}
                   alt="User avatar"
                 />
               </span>
               <div className="flex-1">
                 <header className="mb-1">
-                  <span className="font-semibold">John Doe</span> sent you a
-                  message
+                  <span className="font-semibold">{item.mangerId.name} </span>
                 </header>
-                <p className="text-gray-600">{item.message}</p>
+                <p className="text-gray-600">
+                  A new restaurant has been created with the name{" "}
+                  <strong>{item.message}</strong>
+                </p>
                 <footer className="text-gray-500 mt-2 text-sm">
-                  Today at 10:15 AM
+                  {formattedDate(item.createdAt)}
                 </footer>
               </div>
             </article>

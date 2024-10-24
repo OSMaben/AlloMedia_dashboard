@@ -50,7 +50,7 @@ function App() {
   }
 
   const location = useLocation();
-  const isDashboard = location.pathname.startsWith("/dashboard");
+  const isDashboard = location.pathname.startsWith("/dash");
 
   return (
     <>
@@ -65,7 +65,7 @@ function App() {
               <Dashboard />
             </ProtectedRouteAdmin>
           }
-        >
+        />
 
 
         <Route path="/dashboard" element={<ProtectedRouteAdmin><Dashboard /></ProtectedRouteAdmin>}>

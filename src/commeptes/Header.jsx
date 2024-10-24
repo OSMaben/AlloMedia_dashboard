@@ -38,7 +38,9 @@ const NAV_MENU = [
 ];
 
 const Header = () => {
-  const { isLogin } = useSelector((state) => state.auth);
+  const { error, isLogin } = useSelector((state) => state.auth);
+  console.log(isLogin);
+  // const { isLogin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);

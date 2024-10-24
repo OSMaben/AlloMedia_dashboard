@@ -45,6 +45,11 @@ const NAV_MENU = [
     icon: faKey,
     path: "/dashboard",
   },
+  {
+    name: "Dashboar Livreur",
+    icon: faKey,
+    path: "/livreur",
+  },
 ];
 
 const Header = () => {

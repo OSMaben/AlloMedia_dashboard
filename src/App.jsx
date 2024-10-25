@@ -65,7 +65,7 @@ function App() {
               <Dashboard />
             </ProtectedRouteAdmin>
           }
-        >
+        />
 
 
         <Route path="/dashboard" element={<ProtectedRouteAdmin><Dashboard /></ProtectedRouteAdmin>}>

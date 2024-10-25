@@ -4,12 +4,7 @@ import { Deconxion } from "../redux/features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChartPie,
-  faUser,
-  faUserCircle,
-  faKey,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChartPie, faUser, faUserCircle, faKey } from "@fortawesome/free-solid-svg-icons";
 import {
   Navbar as MTNavbar,
   Collapse,
@@ -40,23 +35,15 @@ const NAV_MENU = [
     icon: faKey,
     path: "/signin",
   },
-  {
-    name: "Dashboard",
-    icon: faKey,
-    path: "/dashboard",
-  },
-  {
-    name: "Dashboar Livreur",
-    icon: faKey,
-    path: "/livreur",
-  },
 ];
 
 const Header = () => {
-  const { isLogin } = useSelector((state) => state.auth);
+  const { isLogin, user } = useSelector((state) => state.auth); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  // console.log(user.user.role);
+
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
@@ -77,34 +64,79 @@ const Header = () => {
           className="z-50 mt-6 relative border-0 pr-3 py-3 pl-6"
         >
           <div className="flex items-center justify-between">
-            <Typography color="blue-gray" className="text-lg font-bold">
-              My Application
+            <Typography
+              color="blue-gray"
+              className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+            >
+              AlloMedia
             </Typography>
             <ul className="ml-10 hidden items-center gap-8 lg:flex">
-              {NAV_MENU.map(({ name, icon, path }) => (
-                <li key={name}>
+              {!isLogin ? (
+                <>
                   <NavLink
-                    to={path}
-                    className="flex items-center px-4 py-2 font-normal text-gray-900 transition-all duration-250 lg:hover:text-blue-700"
-                    aria-current="page"
+                    to="/signin"
+                    className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                    aria-label="Sign in"
                   >
-                    <FontAwesomeIcon icon={icon} className="mr-1" />
-                    {name}
+                    Sign in
                   </NavLink>
-                </li>
-              ))}
+                  <NavLink
+                    to="/signup"
+                    className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                    aria-label="Sign up"
+                  >
+                    Sign up
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  {/* <NavLink
+                    to="/profile"
+                    className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                  >
+                    Profile
+                  </NavLink> */}
+                  
+                  {/* Conditionally render dashboard links based on user role */}
+                  {user.user.role === "client" && (
+                    <NavLink
+                      to="/profile"
+                      className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                    >
+                      Profile
+                    </NavLink>
+                  )}
+                  {user.user.role === "livreur" && (
+                    <NavLink
+                      to="/livreur"
+                      className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                    >
+                       Dashboard
+                    </NavLink>
+                  )}
+                  {user.user.role === "manager" && (
+                    <NavLink
+                      to="/manager-dashboard"
+                      className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                    >
+                       Dashboard
+                    </NavLink>
+                  )}
+                  {user.user.role === "admin" && (
+                    <NavLink
+                      to="/dashboard"
+                      className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                    >
+                       Dashboard
+                    </NavLink>
+                  )}
+
+                  <Button variant="text" onClick={logout}>
+                    Log out
+                  </Button>
+                </>
+              )}
             </ul>
-            <div className="hidden items-center gap-4 lg:flex">
-              <Button variant="text" onClick={logout}>
-                Log out
-              </Button>
-              <a
-                href="https://www.creative-tim.com/product/soft-ui-dashboard-tailwind"
-                target="_blank"
-              >
-                <Button color="gray">Discover</Button>
-              </a>
-            </div>
             <IconButton
               variant="text"
               color="gray"
@@ -121,29 +153,39 @@ const Header = () => {
           <Collapse open={menuOpen}>
             <div className="container mx-auto mt-3 border-t border-gray-200 px-2 pt-4">
               <ul className="flex flex-col gap-4">
-                {NAV_MENU.map(({ name, icon, path }) => (
-                  <li key={name}>
+                {!isLogin ? (
+                  <>
                     <NavLink
-                      to={path}
-                      className="flex items-center px-4 py-2 font-normal text-gray-900 transition-all duration-250 lg:hover:text-blue-700"
+                      to="/signin"
+                      className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                      aria-label="Sign in"
                     >
-                      <FontAwesomeIcon icon={icon} className="mr-1" />
-                      {name}
+                      Sign in
                     </NavLink>
-                  </li>
-                ))}
+                    <NavLink
+                      to="/signup"
+                      className="inline-flex items-center justify-center px-4 py-2 text-base font-medium leading-6 text-white whitespace-no-wrap bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+                      aria-label="Sign up"
+                    >
+                      Sign up
+                    </NavLink>
+                  </>
+                ) : (
+                  <>
+                    <NavLink to="/profile">Profile</NavLink>
+
+                    {/* Conditionally render dashboard links based on user role in mobile menu */}
+                    {user.role === "client" && <NavLink to="/dashboard">Client Dashboard</NavLink>}
+                    {user.role === "livreur" && <NavLink to="/livreur-dashboard">Livreur Dashboard</NavLink>}
+                    {user.role === "manager" && <NavLink to="/manager-dashboard">Manager Dashboard</NavLink>}
+                    {user.role === "admin" && <NavLink to="/admin-dashboard">Admin Dashboard</NavLink>}
+                    
+                    <Button variant="text" onClick={logout}>
+                      Log out
+                    </Button>
+                  </>
+                )}
               </ul>
-              <div className="mt-6 mb-4 flex items-center gap-4">
-                <Button variant="text" onClick={logout}>
-                  Log out
-                </Button>
-                <a
-                  href="https://www.creative-tim.com/product/soft-ui-dashboard-tailwind"
-                  target="_blank"
-                >
-                  <Button color="gray">Discover</Button>
-                </a>
-              </div>
             </div>
           </Collapse>
         </MTNavbar>

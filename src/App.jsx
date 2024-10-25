@@ -3,7 +3,7 @@ import Login from "./pages/login";
 import Register from "./pages/regester";
 import Header from "./commeptes/Header";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 import VerfieOtp from "./pages/VerfieOtp";
 import ForgetPassword from "./pages/ForgetPassword";
 import UpdatPassword from "./pages/UpdatePassword";

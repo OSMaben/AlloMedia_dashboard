@@ -1,25 +1,25 @@
 export default function Footer() {
     return (
         <>
-            <footer class="footer">
-                <div class="row container">
-                    <div class="col">
-                        <div class="logo d-flex">
+            <footer className="footer">
+                <div className="row container">
+                    <div className="col">
+                        <div className="logo d-flex">
                             <img src="./images/logo.png" alt="logo" />
                         </div>
                         <p>
                             Retail food delivery is a courier service in which a restaurant,
                             store, or independent food-delivery
                         </p>
-                        <div class="icons d-flex">
-                            <div class="icon d-flex">
-                                <i class="bx bxl-facebook"></i>
+                        <div className="icons d-flex">
+                            <div className="icon d-flex">
+                                <i className="bx bxl-facebook"></i>
                             </div>
-                            <div class="icon d-flex"><i class="bx bxl-twitter"></i></div>
-                            <div class="icon d-flex"><i class="bx bxl-linkedin"></i></div>
+                            <div className="icon d-flex"><i className="bx bxl-twitter"></i></div>
+                            <div className="icon d-flex"><i className="bx bxl-linkedin"></i></div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div className="col">
                         <div>
                             <h4>Company</h4>
                             <a href="">About Us</a>

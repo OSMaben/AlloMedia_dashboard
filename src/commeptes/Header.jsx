@@ -43,10 +43,12 @@ const NAV_MENU = [
 ];
 
 const Header = () => {
-  const { isLogin } = useSelector((state) => state.auth);
+  const { isLogin, user } = useSelector((state) => state.auth); 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  // console.log(user.user.role);
+
 
   const logout = useCallback(() => {
     localStorage.removeItem("token");
@@ -97,7 +99,7 @@ const Header = () => {
                   Profile
                 </NavLink>
                 <NavLink
-                  to="/dash"
+                  to="/dashboard"
                   className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                 >
                   Dashboard
@@ -108,15 +110,9 @@ const Header = () => {
                 >
                   Dashboar Livreur
                 </NavLink>
-                <NavLink
-                  to="/dash"
-                  className="text-base font-medium leading-6 text-gray-900 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
-                >
-                  Dash
-                </NavLink>
-                {/* <Button variant="text" onClick={logout}>
+                <Button variant="text" onClick={logout}>
                   Log out
-                </Button> */}
+                </Button>
               </>
             )}
           </ul>
@@ -158,7 +154,6 @@ const Header = () => {
                   <NavLink to="/profile">Profile</NavLink>
                   <NavLink to="/dashboard">Dashboard</NavLink>
                   <NavLink to="/livreur">Dashboar Livreur</NavLink>
-                  <NavLink to="/dash">Dash</NavLink>
                   <Button variant="text" onClick={logout}>
                     Log out
                   </Button>

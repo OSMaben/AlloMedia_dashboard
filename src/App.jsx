@@ -64,8 +64,7 @@ function App() {
           <Route path="restoActive" element={<TablesResto />} />
         </Route>
 
-        <Route path="/livreur" element={<ProtectedRouteAdmin><DashboardLivreur /></ProtectedRouteAdmin>}>
-          <Route path="notifications" element={<NotificationsLiv />} />
+        <Route path="/dashboard/livreur" element={<DashboardLivreur />}>
           <Route index element={<MainsLiv />} />
         </Route>
 

@@ -39,7 +39,23 @@ const TableCommand = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
-
+    const getStatusStyle = (status) => {
+        switch (status) {
+          case "pending":
+            return "text-yellow-500"; 
+          case "accepted":
+            return "text-green-500";  
+          case "refused":
+            return "text-red-500";    
+          case "delivered":
+            return "text-blue-500";   
+          case "restord":
+            return "text-gray-500";   
+          default:
+            return "text-yellow-500";   
+        }
+      };
+      
     return (
         <section className="container px-4 mx-auto">
             <div className="flex flex-col">
@@ -64,9 +80,10 @@ const TableCommand = () => {
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {new Date(commande.createdAt).toLocaleTimeString()} {/* Display the creation time */}
                                             </td>
-                                            <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {commande.status}
-                                            </td>
+                                            <td className={`px-4 py-4 text-sm ${getStatusStyle(commande.status)} whitespace-nowrap`}>
+  {commande.status}
+</td>
+
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
                                                 {commande.client.name} {/* Assuming 'client' has a 'name' field */}
                                             </td>

@@ -5,7 +5,10 @@ import {
   AiOutlineForm,
   AiFillShop,
   AiFillProfile,
+  AiFillCheckCircle,
+  AiOutlineCloseCircle,
 } from "react-icons/ai"; 
+
 const Nav = () => {
   return (
     <nav
@@ -26,23 +29,32 @@ const Nav = () => {
       <ul className="flex flex-col w-full">
         {[
           {
-            to: "",
-            title: "Home",
+            to: "/livreur",
+            title: "tody-orders",
             icon: <AiFillHome size={20} />,
           },
           {
-            to: "form",
-            title: "Form",
+            // Gérer les commandes en attente (accepter ou refuser)
+            to: "/commandes-pending",
+            title: "Pending",
             icon: <AiOutlineForm size={20} />,
           },
           {
-            to: "restoActive",
-            title: "Accepted Restaurants",
-            icon: <AiFillShop size={20} />,
+            // Commandes bien livrées
+            to: "/commandes-delivered",
+            title: "Delivered",
+            icon: <AiFillCheckCircle size={20} />,
           },
           {
-            to: "/dashboard/profile",
-            title: "Profile",
+            // Commandes refusées
+            to: "/commandes-refused",
+            title: "Refused",
+            icon: <AiOutlineCloseCircle size={20} />,
+          },
+          {
+            // Afficher les statistiques des livreurs
+            to: "/livreur/statistique",
+            title: "Statistics",
             icon: <AiFillProfile size={20} />,
           },
         ].map((item, index) => (

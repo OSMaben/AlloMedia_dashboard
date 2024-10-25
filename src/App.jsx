@@ -21,22 +21,27 @@ import Mains from "./commeptes/comepontesAdmin/Mains";
 import RegistrationForm from "./commeptes/comepontesAdmin/ContactForm";
 import TablesResto from "./commeptes/comepontesAdmin/TablesResto";
 import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
+import Dashboards from "./pages/Dashboards";
+
 import Search from "./pages/Search";
-import io from "socket.io-client";
-import OrderStatus from './pages/OrderStatus'; 
-import Cart from './pages/Cart'; 
-import { CartProvider } from './context/CartContext'
+import Cart from './pages/Cart'; // Adjust the path as needed
+
+//livreur
+import DashboardLivreur from "./livreur/dashbord";
+import NotificationsLiv from "./commeptes/componentLivreur/Notification";
+import MainsLiv from "./commeptes/componentLivreur/Mains";
 
 function App() {
   const { error, status, isLogin } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
 
   const token = localStorage.getItem("token");
+
   if (token) {
     isLogin ? null : dispatch(isLogins(token));
   }
 
-  const socket = io("http://localhost:8080");
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
 
@@ -45,6 +50,18 @@ function App() {
       {!isDashboard && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/dash" element={<Dashboards />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRouteAdmin>
+              <Dashboard />
+            </ProtectedRouteAdmin>
+          }
+        />
+
+        <Route path="/search" element={<Search></Search>}></Route>
+        <Route path="/cart" element={<Cart />} />
 
         <Route
           path="/dashboard"
@@ -61,6 +78,17 @@ function App() {
         </Route>
 
         <Route
+          path="/livreur"
+          element={
+            <ProtectedRouteAdmin>
+              <DashboardLivreur />
+            </ProtectedRouteAdmin>
+          }
+        >
+          <Route path="notifications" element={<NotificationsLiv />} />
+          <Route index element={<MainsLiv />} />
+        </Route>
+        <Route
           path="/signin"
           element={
             <ProtectedRoutAuth>
@@ -68,11 +96,6 @@ function App() {
             </ProtectedRoutAuth>
           }
         />
-
-        <Route path="/search" element={<Search></Search>} />
-        <Route path="/track" element={<OrderStatus />} />
-        <Route path="/Cart" element={<Cart />} />
-
         <Route
           path="/signup"
           element={
@@ -97,7 +120,6 @@ function App() {
             </ProtectedRoutAuth>
           }
         />
-
         <Route
           path="/updit-password"
           element={
@@ -106,7 +128,6 @@ function App() {
             </ProtectedRoutAuth>
           }
         />
-
         <Route
           path="/profile"
           element={
@@ -132,18 +153,23 @@ function App() {
             }
           />
         </Route>
+        <Route
+          path="/updit-password"
+          element={
+            <ProtectedRoutAuth>
+              <UpdatPassword />
+            </ProtectedRoutAuth>
+          }
+        />
       </Routes>
     </>
   );
 }
 
-// Ensure this is outside the App function
 export default function WrappedApp() {
   return (
     <BrowserRouter>
-      <CartProvider>
-        <App />
-      </CartProvider>
+      <App />
     </BrowserRouter>
   );
 }

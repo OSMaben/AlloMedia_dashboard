@@ -99,7 +99,7 @@ const Header = () => {
                   Profile
                 </NavLink>
                 <NavLink
-                  to="/dashboard"
+                  to="/dash"
                   className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                 >
                   Dashboard

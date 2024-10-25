@@ -8,19 +8,13 @@ import {
   AiOutlineHome,
   AiOutlineLock,
   AiOutlineUpload,
-  AiOutlineSetting,
 } from "react-icons/ai";
 import { userWithResto } from "../redux/features/adminSlice";
 
 const AdminProfile = () => {
   const dispatch = useDispatch();
   const { error, isLoading } = useSelector((state) => state.admin);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm();
+  const { register, handleSubmit, formState: { errors }, setError } = useForm();
 
   const [imagePreview, setImagePreview] = useState(null);
   const [profileImage, setProfileImage] = useState("./images/user/user-06.png");
@@ -28,7 +22,6 @@ const AdminProfile = () => {
   const [bio, setBio] = useState("Write a short bio about yourself here.");
   const [jobTitle, setJobTitle] = useState("Super Admin at Rusters");
   const [location, setLocation] = useState("Your Location");
-  const [darkMode, setDarkMode] = useState(false);
 
   const onSubmit = (data) => {
     if (data.image[0] && data.image[0].size > 2097152) {
@@ -66,78 +59,57 @@ const AdminProfile = () => {
     }
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        darkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-800"
-      }`}
-    >
-      <div className="flex flex-col items-center p-6">
-        <div className="flex justify-between w-full mb-4">
-          <h1 className="text-3xl font-bold">Admin Profile</h1>
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 rounded-md bg-blue-600 text-white hover:bg-blue-500"
-          >
-            {darkMode ? "Light Mode" : "Dark Mode"}
-          </button>
-        </div>
-        <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-          <div className="relative h-32 rounded-t-lg overflow-hidden">
-            <img
-              src={coverImage}
-              alt="Cover"
-              className="w-full h-full object-cover"
+    <div className="min-h-screen bg-gray-100 flex justify-center items-center p-6">
+      <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="relative">
+          <img
+            src={coverImage}
+            alt="Cover"
+            className="w-full h-40 object-cover"
+          />
+          <label className="absolute bottom-2 right-2 bg-blue-600 text-white rounded-full px-4 py-1 cursor-pointer">
+            Change Cover
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleCoverChange}
+              className="hidden"
             />
-            <label className="absolute bottom-2 right-2 bg-blue-600 text-white rounded-full px-4 py-1 cursor-pointer">
-              Change Cover
+          </label>
+        </div>
+        <div className="flex flex-col items-center p-4 -mt-16">
+          <div className="relative">
+            <img
+              src={profileImage}
+              alt="Profile"
+              className="w-32 h-32 rounded-full border-4 border-white object-cover"
+            />
+            <label className="absolute bottom-0 right-0 bg-blue-600 text-white rounded-full px-2 cursor-pointer">
               <input
                 type="file"
                 accept="image/*"
-                onChange={handleCoverChange}
+                onChange={handleProfileChange}
                 className="hidden"
               />
+              Change
             </label>
           </div>
-          <div className="flex flex-col items-center -mt-16">
-            <div className="relative">
-              <img
-                src={profileImage}
-                alt="Profile"
-                className="w-32 h-32 rounded-full border-4 border-white bg-gray-200 dark:bg-gray-700 object-cover"
-              />
-              <label className="absolute bottom-0 right-0 bg-black bg-opacity-50 text-white rounded-full px-2 cursor-pointer">
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleProfileChange}
-                  className="hidden"
-                />
-                Change
-              </label>
-            </div>
-            <h3 className="mt-2 text-lg font-semibold">{jobTitle}</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              {location}
-            </p>
-          </div>
-          <div className="p-4">
-            <h4 className="text-lg font-semibold">About Me</h4>
-            <textarea
-              value={bio}
-              onChange={(e) => setBio(e.target.value)}
-              className="w-full h-20 p-2 border rounded-md bg-gray-100 dark:bg-gray-700 dark:text-white"
-              placeholder="Write a short bio..."
-            />
-          </div>
+          <h3 className="mt-4 text-xl font-semibold">{jobTitle}</h3>
+          <p className="text-gray-500">{location}</p>
         </div>
 
-        {/* Registration Form */}
-        <div className="w-full max-w-md mt-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+        <div className="p-4 text-center">
+          <h4 className="text-lg font-semibold">About Me</h4>
+          <textarea
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            className="w-full h-20 p-2 border rounded-md bg-gray-100"
+            placeholder="Write a short bio..."
+          />
+        </div>
+
+        <div className="px-4 py-6">
           <h2 className="text-2xl font-bold text-center mb-4">
             Create Manager & Restaurant
           </h2>
@@ -146,7 +118,7 @@ const AdminProfile = () => {
               <label className="block text-sm font-medium mb-1">
                 Upload Image
               </label>
-              <div className="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-4 bg-gray-50 dark:bg-gray-700">
+              <div className="flex flex-col items-center justify-center border-2 border-dashed rounded-md p-4 bg-gray-50">
                 <AiOutlineUpload className="text-4xl text-gray-500" />
                 <p className="text-gray-500 mt-2">Click or drag image here</p>
                 <input
@@ -205,18 +177,14 @@ const AdminProfile = () => {
                 label="Address"
                 icon={AiOutlineHome}
                 type="text"
-                register={register("address", {
-                  required: "Address is required",
-                })}
+                register={register("address", { required: "Address is required" })}
                 error={errors.address}
               />
               <Field
                 label="Password"
                 icon={AiOutlineLock}
                 type="password"
-                register={register("password", {
-                  required: "Password is required",
-                })}
+                register={register("password", { required: "Password is required" })}
                 error={errors.password}
               />
             </div>
@@ -241,8 +209,8 @@ const AdminProfile = () => {
 const Field = ({ label, icon: Icon, type, register, error }) => (
   <div className="relative">
     <label className="block text-sm font-medium mb-1">{label}</label>
-    <div className="flex items-center border rounded-md p-2 bg-gray-50 dark:bg-gray-600">
-      <Icon className="mr-2 text-gray-600 dark:text-gray-300" />
+    <div className="flex items-center border rounded-md p-2 bg-gray-50">
+      <Icon className="mr-2 text-gray-600" />
       <input
         type={type}
         {...register}

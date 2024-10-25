@@ -58,7 +58,51 @@ const Header = () => {
 
 
   const GlobalStyles = createGlobalStyle`
+:root {
+  --primary-color: #f94a3d;
+  --yellow-color: #ffcf03;
+  --black-color: #212244;
+  --default-color: #69697b;
+  --deep-yellow: #ff9401;
+  --yellow-color-1: #ffe507;
+  --red-color-1: #e83b2e;
+  --red-color-2: #ee3e32;
+  --light-red-color: #fdecec;
+  --grey-color: #eaeaea;
+  --grey-color-1: #f8f8f8;
+  --white-color: #fff;
+  --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
 
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  // border: none;
+  outline: none;
+
+}
+
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--black-color);
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style-type: none;
+}
     .navbar {
       padding: 2rem 0;
     }
@@ -79,7 +123,7 @@ const Header = () => {
       background-color: var(--white-color);
       border-radius: 0.5rem;
       box-shadow: var(--box-shadow);
-      border: 1px solid rgba(105, 105, 123, 0.1);
+      border: 2px solid rgba(105, 105, 123, 0.1);
       padding: 0.5rem 0;
       margin-right: 1.5rem;
       width: 25rem;
@@ -260,7 +304,7 @@ const Header = () => {
                   {user.user.role === "client" && (
                     <NavLink
                       to="/profile"
-                      className="text-2xl font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                      className="text-[1.5rem] font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                     >
                       Profile
                     </NavLink>
@@ -268,7 +312,7 @@ const Header = () => {
                   {user.user.role === "livreur" && (
                     <NavLink
                       to="/livreur"
-                      className="text-2xl font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                      className="text-[1.5rem] font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                     >
                        Dashboard
                     </NavLink>
@@ -276,7 +320,7 @@ const Header = () => {
                   {user.user.role === "manager" && (
                     <NavLink
                       to="/manager-dashboard"
-                      className="text-2xl font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                      className="text-[1.5rem] font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                     >
                        Dashboard
                     </NavLink>
@@ -284,7 +328,7 @@ const Header = () => {
                   {user.user.role === "admin" && (
                     <NavLink
                       to="/dashboard"
-                      className="text-2xl font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                      className="text-[1.5rem] font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                     >
                        Dashboard
                     </NavLink>
@@ -333,7 +377,6 @@ const Header = () => {
                   <>
                     <NavLink to="/profile">Profile</NavLink>
 
-                    {/* Conditionally render dashboard links based on user role in mobile menu */}
                     {user.role === "client" && <NavLink to="/dashboard">Client Dashboard</NavLink>}
                     {user.role === "livreur" && <NavLink to="/livreur-dashboard">Livreur Dashboard</NavLink>}
                     {user.role === "manager" && <NavLink to="/manager-dashboard">Manager Dashboard</NavLink>}

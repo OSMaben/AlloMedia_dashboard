@@ -828,9 +828,6 @@ img {
     gap: 3rem 0;
   }
 }
-
-
-
   `
 
   return (

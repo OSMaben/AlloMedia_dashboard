@@ -1,10 +1,12 @@
 // Profile.jsx
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
+import TablesResto from "../commeptes/comepontesAdmin/TablesResto";
 
 const Profile = () => {
   return (
     <div className="bg-gray-100">
+      <TablesResto/>
       <div className="mx-auto py-8">
         <div className="grid grid-cols-4 sm:grid-cols-12 gap-6 px-4">
           <div className="col-span-4 sm:col-span-3">

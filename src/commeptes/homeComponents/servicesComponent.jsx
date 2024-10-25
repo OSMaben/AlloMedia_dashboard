@@ -1,17 +1,17 @@
 export default function ServiceComponent()
 {
     return (
-        <section class="section services" id="services">
-      <div class="row container">
-        <div class="col">
+        <section className="section services" id="services">
+      <div className="row container">
+        <div className="col">
           <h2>Why we are Best in our Twon</h2>
           <p>
             whole grains and low-fat dairy can help to reduce your risk of heart
             disease by maintaining blood pressure and
           </p>
         </div>
-        <div class="col">
-          <div class="card">
+        <div className="col">
+          <div className="card">
             <img src="./images/meat-icon.svg" alt="" />
             <h3>
               Choose <br />
@@ -20,8 +20,8 @@ export default function ServiceComponent()
             </h3>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
+        <div className="col">
+          <div className="card">
             <img src="./images/delivery-icon.svg" alt="" />
             <h3>
               Get delivery <br />
@@ -30,8 +30,8 @@ export default function ServiceComponent()
             </h3>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
+        <div className="col">
+          <div className="card">
             <img src="./images/phone-icon.svg" alt="" />
             <h3>
               We have <br />

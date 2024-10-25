@@ -6,14 +6,12 @@ import {
   refuseResto,
 } from "../../redux/features/adminSlice";
 
-
 const TablesDemande = () => {
   const dispatch = useDispatch();
   const { error, status, isLoading, resturs, restoCounter } = useSelector(
     (state) => state.admin
   );
 
- 
   useEffect(() => {
     dispatch(getRestoPending());
   }, [restoCounter]);
@@ -81,27 +79,28 @@ const TablesDemande = () => {
                       {item.restoname}
                     </span>
                     <div className="absolute left-0 hidden group-hover:block bg-white border rounded shadow-md p-2 z-10">
-                      A fine dining experience with gourmet cuisine and
-                      exquisite service.
+                      {item.bio}
                     </div>
                   </div>
                 </td>
                 <td className="py-3 px-2 w-full sm:w-1/5 truncate text-gray-600">
-                  Pending
+                  <span className="inline-block bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full text-xs font-semibold">
+                    Pending
+                  </span>
                 </td>
                 <td className="relative py-3 px-2 w-full sm:w-1/5 max-w-xs xl:max-w-lg">
                   <div className="relative group">
-                    <span className="truncate">John Doe</span>
+                    <span className="truncate">{item.managerId.name}</span>
                     <div className="absolute left-0 hidden group-hover:block bg-white border rounded-lg shadow-md p-4 z-10 max-w-xs mx-auto">
                       <div className="flex flex-col gap-2 w-max">
                         <div className="flex gap-2 items-center">
                           <img
                             className="w-8 h-8 rounded"
-                            src="https://via.placeholder.com/150"
+                            src={item.managerId.imgProfile.url}
                             alt="John Doe"
                           />
                           <h3 className="text-sm font-bold text-gray-600">
-                            John Doe
+                            {item.managerId.name}
                           </h3>
                         </div>
                         <div>
@@ -109,23 +108,25 @@ const TablesDemande = () => {
                             <strong>Role:</strong> Manager
                           </p>
                           <p className="text-sm text-gray-600">
-                            <strong>Email:</strong> john@example.com
+                            <strong>Email:</strong> {item.managerId.email}
                           </p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </td>
-                <td className="py-3 px-2 w-full sm:w-1/5 truncate">Italian</td>
+                <td className="py-3 px-2 w-full sm:w-1/5 truncate">
+                  {item.type}
+                </td>
                 <td className="py-3 px-2 w-full sm:w-1/5 truncate">
                   <button
-                    className="text-green-500 hover:underline"
+                    className="text-green-500 hover:underline text-sm"
                     onClick={() => acceptedResto(item._id)}
                   >
                     Accept
                   </button>
                   <button
-                    className="text-red-500 hover:underline ml-2"
+                    className="text-red-500 hover:underline ml-2 text-sm"
                     onClick={() => refuserResto(item._id)}
                   >
                     Refuse

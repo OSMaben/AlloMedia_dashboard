@@ -10,12 +10,9 @@ const Dashboards = () => {
     <>
       <AsideBare />
 
-      <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay" />
-      {/* end: Sidebar */}
-      {/* start: Main */}
-      <main className="w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 min-h-screen transition-all main">
+      <main className="w-full flex-1 md:w-[calc(100%-160px)]  md:ml-40  min-h-screen transition-all main">
         <MiniHeadre />
-        <div className="p-6">
+        <div className="p-6 w-full">
           <Analiteque />
           <TableRestoNo />
           <Statistics />

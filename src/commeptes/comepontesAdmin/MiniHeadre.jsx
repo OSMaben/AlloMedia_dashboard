@@ -1,6 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { FaBell, FaUserCircle, FaChevronDown, FaSearch } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { io } from "socket.io-client";
+import {
+  addNotification,
+  getListNotification,
+} from "../../redux/features/adminSlice";
 
-const MiniHeadre = () => {
+const MiniHeader = () => {
+  const [isNotificationOpen, setNotificationOpen] = useState(false);
+  const [isProfileOpen, setProfileOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { error, status, isLoading, resturs, restoCounter, ListNotification } =
+    useSelector((state) => state.admin);
+
+  useEffect(() => {
+    dispatch(getListNotification());
+  }, [dispatch]);
+  console.log(ListNotification);
+
+  useEffect(() => {
+    const socket = io("http://localhost:8080", {
+      query: { role: "admin" },
+    });
+
+    socket.on("connect", () => {
+      console.log(`Connected with ID: ${socket.id}`);
+    });
+
+    socket.on("newRestaurantNotification", (data) => {
+      console.log("New Restaurant Notification:", data);
+      dispatch(addNotification(data));
+    });
+
+    socket.on("disconnect", (reason) => {
+      console.log(`Disconnected from server: ${reason}`);
+    });
+
+    return () => {
+      socket.off("connect");
+      socket.off("newRestaurantNotification");
+      socket.off("disconnect");
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <div className="py-2 px-6 bg-white flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30">
       <button type="button" className="text-lg text-gray-600 sidebar-toggle">
@@ -16,457 +60,85 @@ const MiniHeadre = () => {
         <li className="text-gray-600 mr-2 font-medium">Analytics</li>
       </ul>
       <ul className="ml-auto flex items-center">
-        <li className="mr-1 dropdown">
+        {/* Search Icon */}
+        <li className="mr-1">
           <button
             type="button"
-            className="dropdown-toggle text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"
+            className="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"
           >
-            <i className="ri-search-line" />
+            <FaSearch />
           </button>
-          <div className="dropdown-menu shadow-md shadow-black/5 z-30 hidden max-w-xs w-full bg-white rounded-md border border-gray-100">
-            <form action="" className="p-4 border-b border-b-gray-100">
-              <div className="relative w-full">
-                <input
-                  type="text"
-                  className="py-2 pr-4 pl-10 bg-gray-50 w-full outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500"
-                  placeholder="Search..."
-                />
-                <i className="ri-search-line absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
-              </div>
-            </form>
-            <div className="mt-3 mb-2">
-              <div className="text-[13px] font-medium text-gray-400 ml-4 mb-2">
-                Recently
-              </div>
-              <ul className="max-h-64 overflow-y-auto">
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        Create landing page
-                      </div>
-                      <div className="text-[11px] text-gray-400">$345</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        Create landing page
-                      </div>
-                      <div className="text-[11px] text-gray-400">$345</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        Create landing page
-                      </div>
-                      <div className="text-[11px] text-gray-400">$345</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        Create landing page
-                      </div>
-                      <div className="text-[11px] text-gray-400">$345</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        Create landing page
-                      </div>
-                      <div className="text-[11px] text-gray-400">$345</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        Create landing page
-                      </div>
-                      <div className="text-[11px] text-gray-400">$345</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        Create landing page
-                      </div>
-                      <div className="text-[11px] text-gray-400">$345</div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        Create landing page
-                      </div>
-                      <div className="text-[11px] text-gray-400">$345</div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
         </li>
-        <li className="dropdown">
+
+        {/* Notification Dropdown */}
+        <li className="mr-4 relative">
           <button
             type="button"
-            className="dropdown-toggle text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"
+            onClick={() => setNotificationOpen(!isNotificationOpen)}
+            className="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"
           >
-            <i className="ri-notification-3-line" />
+            <FaBell />
           </button>
-          <div className="dropdown-menu shadow-md shadow-black/5 z-30 hidden max-w-xs w-full bg-white rounded-md border border-gray-100">
-            <div className="flex items-center px-4 pt-4 border-b border-b-gray-100 notification-tab">
-              <button
-                type="button"
-                data-tab="notification"
-                data-tab-page="notifications"
-                className="text-gray-400 font-medium text-[13px] hover:text-gray-600 border-b-2 border-b-transparent mr-4 pb-1 active"
-              >
-                Notifications
-              </button>
-              <button
-                type="button"
-                data-tab="notification"
-                data-tab-page="messages"
-                className="text-gray-400 font-medium text-[13px] hover:text-gray-600 border-b-2 border-b-transparent mr-4 pb-1"
-              >
-                Messages
-              </button>
-            </div>
-            <div className="my-2">
-              <ul
-                className="max-h-64 overflow-y-auto"
-                data-tab-for="notification"
-                data-page="notifications"
-              >
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        New order
+          {isNotificationOpen && (
+            <div className="absolute right-0 mt-4 w-72 bg-white shadow-lg rounded-lg z-50">
+              <ul className="py-2 text-gray-700 text-sm max-h-80 overflow-y-auto">
+                {ListNotification.length > 0 ? (
+                  ListNotification.map((notification, index) => (
+                    <li
+                      key={index}
+                      className="px-4 py-3 hover:bg-gray-50 transition-colors duration-200 flex items-center border-b last:border-b-0"
+                    >
+                      <img
+                        src={notification.mangerId?.imgProfile.url}
+                        alt="profile"
+                        className="w-10 h-10 rounded-full object-cover mr-3 shadow-md"
+                      />
+                      <div className="flex-1">
+                        <span className="font-semibold text-gray-900">
+                          {notification.mangerId.name}
+                        </span>
+                        <p className="text-xs text-gray-500 mt-1">
+                          A new restaurant has been created with the name{" "}
+                          <span className="font-medium text-gray-700">
+                            {notification.message}
+                          </span>
+                        </p>
                       </div>
-                      <div className="text-[11px] text-gray-400">
-                        from a user
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        New order
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        from a user
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        New order
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        from a user
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        New order
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        from a user
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        New order
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        from a user
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-              <ul
-                className="max-h-64 overflow-y-auto hidden"
-                data-tab-for="notification"
-                data-page="messages"
-              >
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        John Doe
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        Hello there!
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        John Doe
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        Hello there!
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        John Doe
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        Hello there!
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        John Doe
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        Hello there!
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="py-2 px-4 flex items-center hover:bg-gray-50 group"
-                  >
-                    <img
-                      src="https://placehold.co/32x32"
-                      alt=""
-                      className="w-8 h-8 rounded block object-cover align-middle"
-                    />
-                    <div className="ml-2">
-                      <div className="text-[13px] text-gray-600 font-medium truncate group-hover:text-blue-500">
-                        John Doe
-                      </div>
-                      <div className="text-[11px] text-gray-400">
-                        Hello there!
-                      </div>
-                    </div>
-                  </a>
-                </li>
+                    </li>
+                  ))
+                ) : (
+                  <li className="px-4 py-2 text-center text-gray-500">
+                    No notifications
+                  </li>
+                )}
               </ul>
             </div>
-          </div>
+          )}
         </li>
-        <li className="dropdown ml-3">
-          <button type="button" className="dropdown-toggle flex items-center">
-            <img
-              src="https://placehold.co/32x32"
-              alt=""
-              className="w-8 h-8 rounded block object-cover align-middle"
-            />
+
+        {/* Profile Dropdown */}
+        <li className="relative">
+          <button
+            type="button"
+            onClick={() => setProfileOpen(!isProfileOpen)}
+            className="flex items-center text-gray-400 hover:text-gray-600"
+          >
+            <FaUserCircle className="text-2xl" />
+            <FaChevronDown className="ml-1 text-sm" />
           </button>
-          <ul className="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
-            <li>
-              <a
-                href="#"
-                className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
-              >
-                Profile
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
-              >
-                Settings
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
-              >
-                Logout
-              </a>
-            </li>
-          </ul>
+          {isProfileOpen && (
+            <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md z-50">
+              <ul className="py-1 text-gray-700 text-sm">
+                <li className="px-4 py-2 hover:bg-gray-100">Profile</li>
+                <li className="px-4 py-2 hover:bg-gray-100">Settings</li>
+                <li className="px-4 py-2 hover:bg-gray-100">Logout</li>
+              </ul>
+            </div>
+          )}
         </li>
       </ul>
     </div>
   );
 };
 
-export default MiniHeadre;
+export default MiniHeader;

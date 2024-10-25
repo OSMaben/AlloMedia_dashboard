@@ -1,44 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  accepterResto,
+  getRestoPending,
+  refuseResto,
+} from "../../redux/features/adminSlice";
 const Table2 = () => {
+  const dispatch = useDispatch();
+  const { error, status, isLoading, resturs, restoCounter } = useSelector(
+    (state) => state.admin
+  );
+
+  useEffect(() => {
+    dispatch(getRestoPending());
+  }, [restoCounter]);
+
+  const acceptedResto = (id) => {
+    dispatch(accepterResto({ id }));
+  };
+
+  const refuserResto = (id) => {
+    dispatch(refuseResto({ id }));
+  };
   return (
     <div className="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
       <div className="flex justify-between mb-4 items-start">
-        <div className="font-medium">Manage Services</div>
-        <div className="dropdown">
-          <button
-            type="button"
-            className="dropdown-toggle text-gray-400 hover:text-gray-600"
-          >
-            <i className="ri-more-fill" />
-          </button>
-          <ul className="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
-            <li>
-              <a
-                href="#"
-                className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
-              >
-                Profile
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
-              >
-                Settings
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50"
-              >
-                Logout
-              </a>
-            </li>
-          </ul>
-        </div>
+        <div className="font-medium">Restaurants Pending Approval</div>
       </div>
       <form action="" className="flex items-center mb-4">
         <div className="relative w-full mr-2">
@@ -57,66 +45,78 @@ const Table2 = () => {
         <table className="w-full min-w-[540px]">
           <thead>
             <tr>
-              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">
+              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md">
                 Restaurant
               </th>
-              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Status
               </th>
-              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Manager
               </th>
-              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Cuisine
               </th>
-              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="py-2 px-4 border-b border-b-gray-50">
-                <div className="flex items-center">
-                  <img
-                    src="https://placehold.co/32x32"
-                    alt=""
-                    className="w-8 h-8 rounded object-cover block"
-                  />
-                  <a
-                    href="#"
-                    className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate"
-                  >
-                    Create landing page
-                  </a>
-                </div>
-              </td>
-              <td className="py-2 px-4 border-b border-b-gray-50">
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                  Pending
-                </span>
-              </td>
-              <td className="py-2 px-4 border-b border-b-gray-50">
-                <span className="text-[13px] font-medium text-gray-400">
-                  John Doe
-                </span>
-              </td>
-              <td className="py-2 px-4 border-b border-b-gray-50">
-                <span className="text-[13px] font-medium text-gray-400">
-                  Italian
-                </span>
-              </td>
-              <td className="py-2 px-4 border-b border-b-gray-50">
-                <div className="flex items-center space-x-2">
-                  <button className="text-green-500 hover:text-green-700">
-                    <FaCheck className="w-4 h-4" />
-                  </button>
-                  <button className="text-red-500 hover:text-red-700">
-                    <FaTimes className="w-4 h-4" />
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {resturs?.map((item) => (
+              <tr key={item._id} className="hover:bg-gray-50 hover:text-gray-700 duration-300 transition-all cursor-default">
+                <td className="py-2 px-4 border-b border-b-gray-50 hover:text-gray-700 duration-300 transition-all cursor-default">
+                  <div className="flex items-center">
+                    <img
+                      src={item.logo}
+                      className="w-8 h-8 rounded object-cover block"
+                    />
+                    <a
+                      href="#"
+                      className="text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate"
+                    >
+                      {item.restoname}
+                    </a>
+                  </div>
+                </td>
+                <td className="py-2 px-4 border-b border-b-gray-50 hover:text-gray-700 duration-300 transition-all cursor-default">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                    Pending
+                  </span>
+                </td>
+                <td className="py-2 px-4 border-b border-b-gray-50 ">
+                  <span className="text-[13px] flex gap-2 items-center font-medium text-gray-400 hover:text-gray-700 duration-300 transition-all cursor-default">
+                    <img
+                      src={item.managerId.imgProfile.url}
+                      alt="manager photo"
+                      className="w-8 h-8 rounded-full object-cover block"
+                    />
+                    {item.managerId.name}
+                  </span>
+                </td>
+                <td className="py-2 px-4 border-b border-b-gray-50 ">
+                  <span className="text-[13px] font-medium text-gray-400 hover:text-gray-700 duration-300 transition-all cursor-default">
+                    {item.type}
+                  </span>
+                </td>
+                <td className="py-2 px-4 border-b border-b-gray-50">
+                  <div className="flex items-center space-x-2">
+                    <button className="text-green-500 hover:text-green-700">
+                      <FaCheck
+                        className="w-4 h-4"
+                        onClick={() => acceptedResto(item._id)}
+                      />
+                    </button>
+                    <button className="text-red-500 hover:text-red-700">
+                      <FaTimes
+                        className="w-4 h-4"
+                        onClick={() => refuserResto(item._id)}
+                      />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
             {/* Repeat the table row structure as needed */}
           </tbody>
         </table>

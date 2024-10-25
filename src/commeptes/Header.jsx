@@ -21,6 +21,11 @@ const NAV_MENU = [
     path: "/",
   },
   {
+    name: "dash",
+    icon: faChartPie,
+    path: "/dash",
+  },
+  {
     name: "Profile",
     icon: faUser,
     path: "/profile",
@@ -92,7 +97,7 @@ const Header = () => {
                   Profile
                 </NavLink>
                 <NavLink
-                  to="/dashboard"
+                  to="/dash"
                   className="text-base font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                 >
                   Dashboard
@@ -103,9 +108,15 @@ const Header = () => {
                 >
                   Dashboar Livreur
                 </NavLink>
-                <Button variant="text" onClick={logout}>
+                <NavLink
+                  to="/dash"
+                  className="text-base font-medium leading-6 text-gray-900 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
+                >
+                  Dash
+                </NavLink>
+                {/* <Button variant="text" onClick={logout}>
                   Log out
-                </Button>
+                </Button> */}
               </>
             )}
           </ul>
@@ -147,6 +158,7 @@ const Header = () => {
                   <NavLink to="/profile">Profile</NavLink>
                   <NavLink to="/dashboard">Dashboard</NavLink>
                   <NavLink to="/livreur">Dashboar Livreur</NavLink>
+                  <NavLink to="/dash">Dash</NavLink>
                   <Button variant="text" onClick={logout}>
                     Log out
                   </Button>

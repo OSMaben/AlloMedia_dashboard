@@ -35,7 +35,7 @@ const Nav = () => {
           },
           {
             // Gérer les commandes en attente (accepter ou refuser)
-            to: "/commandes-pending",
+            to: "/dashboard/livreur/order-pending",
             title: "Pending",
             icon: <AiOutlineForm size={20} />,
           },

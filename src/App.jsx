@@ -26,8 +26,8 @@ import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
-import OrderDetail from "./commeptes/componentLivreur/CommanDetail"
-
+import OrderDetail from "./commeptes/componentLivreur/CommanDetail";
+import CommndPending from "./commeptes/componentLivreur/CommandPending";
 
 
 
@@ -67,7 +67,7 @@ function App() {
         <Route path="/dashboard/livreur" element={<DashboardLivreur />}>
           <Route index element={<MainsLiv />} />
           <Route path="order-detail/:id" element={<OrderDetail />} />
-          {/* <Route path="order-pending" element={<OrderDetail />} /> */}
+          <Route path="order-pending" element={<CommndPending  />} />
         </Route>
 
         <Route

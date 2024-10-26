@@ -40,7 +40,11 @@ const CommandeDetails = () => {
         <div className="bg-white shadow rounded-lg p-4">
           <h3 className="text-xl font-semibold mb-2">Informations de la Commande</h3>
           <p><strong>Status:</strong> {commande.status}</p>
-          <p><strong>Date:</strong> {new Date(commande.createdAt).toLocaleString()}</p>
+{commande.status === "refused" && (
+  <p><strong>Raison de refus:</strong> {commande.refusalReason}</p>
+)}
+<p><strong>Date:</strong> {new Date(commande.createdAt).toLocaleString()}</p>
+
 
           <h3 className="text-xl font-semibold mt-4 mb-2">Client</h3>
           <p><strong>Nom:</strong> {commande.client.name}</p>

@@ -1,1 +1,0 @@
-// affecher les commande pending

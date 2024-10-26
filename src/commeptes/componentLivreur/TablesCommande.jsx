@@ -76,26 +76,27 @@ const TableCommand = () => {
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                     {commandes.map((commande) => (
+    
                                         <tr key={commande._id}>
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {new Date(commande.createdAt).toLocaleTimeString()} {/* Display the creation time */}
+                                                {new Date(commande.createdAt).toLocaleTimeString()} 
                                             </td>
                                             <td className={`px-4 py-4 text-sm ${getStatusStyle(commande.status)} whitespace-nowrap`}>
   {commande.status}
 </td>
 
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                {commande.client.name} {/* Assuming 'client' has a 'name' field */}
+                                                {commande.client.name}
                                             </td>
                                             <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                                                ${commande.totalPrice} {/* Display the total price */}
+                                                ${commande.totalPrice} 
                                             </td>
                                             <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                                <button className="text-blue-500 hover:text-indigo-500 focus:outline-none">
-                                                    Details
-                                                </button>
-                                            </td>
-                                        </tr>
+  <button className="text-blue-500 hover:text-indigo-500 focus:outline-none">
+    <a href={`/dashboard/livreur/order-detail/${commande._id}`}>Détails de la commande</a>
+  </button>
+</td>
+                                      </tr>
                                     ))}
                                     {commandes.length === 0 && (
                                         <tr>

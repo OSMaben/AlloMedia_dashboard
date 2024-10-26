@@ -26,7 +26,7 @@ import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
-
+import OrderDetail from "./commeptes/componentLivreur/CommanDetail"
 
 
 
@@ -66,6 +66,7 @@ function App() {
 
         <Route path="/dashboard/livreur" element={<DashboardLivreur />}>
           <Route index element={<MainsLiv />} />
+          <Route path="order-detail/:id" element={<OrderDetail />} />
         </Route>
 
         <Route

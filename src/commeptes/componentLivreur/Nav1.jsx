@@ -29,7 +29,7 @@ const Nav = () => {
       <ul className="flex flex-col w-full">
         {[
           {
-            to: "/livreur",
+            to: "/dashboard/livreur",
             title: "tody-orders",
             icon: <AiFillHome size={20} />,
           },

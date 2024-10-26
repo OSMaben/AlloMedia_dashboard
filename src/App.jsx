@@ -67,6 +67,7 @@ function App() {
         <Route path="/dashboard/livreur" element={<DashboardLivreur />}>
           <Route index element={<MainsLiv />} />
           <Route path="order-detail/:id" element={<OrderDetail />} />
+          {/* <Route path="order-pending" element={<OrderDetail />} /> */}
         </Route>
 
         <Route

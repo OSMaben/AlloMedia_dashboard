@@ -27,15 +27,14 @@ import Dashboards from "./pages/Dashboards";
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
+
 import OrderDetail from "./commeptes/componentLivreur/CommanDetail";
 import CommndPending from "./commeptes/componentLivreur/CommandPending";
 import AcceptedCommandes from "./commeptes/componentLivreur/CommandeAccepted";
 import LivreurStatistics from "./commeptes/componentLivreur/CommandeStatistic";
 import ProfilePage from './commeptes/componentLivreur/profile';
 import Commandes from "./commeptes/componentLivreur/commandes";
-
-
-
+import AdminProfile from "./pages/AdminProfile";
 
 
 function App() {
@@ -50,7 +49,7 @@ function App() {
   }
 
   const location = useLocation();
-  const isDashboard = location.pathname.startsWith("/dashboard");
+  const isDashboard = location.pathname.startsWith("/dash");
 
   return (
     <>
@@ -58,6 +57,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dash" element={<Dashboards />} />
+        <Route path="/admin" element={<AdminProfile />} />
         <Route
           path="/dashboard"
           element={

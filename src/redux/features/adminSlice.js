@@ -169,8 +169,8 @@ export const suspendResto = createAsyncThunk(
   async (data, thunkAPI) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.delete(
-        `http://localhost:8080/api/v1/admin/deleted/restaurants/${data.id}`,
+      const res = await axios.get(
+        `http://localhost:8080/api/v1/admin/banneRestaurant/restaurants/${data.id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -220,6 +220,7 @@ const adminSlice = createSlice({
   initialState,
   reducers: {
     addNotification(state, action) {
+      state.restoCounter += 1;
       state.ListNotification = [action.payload, ...state.ListNotification];
     },
   },
@@ -353,6 +354,24 @@ const adminSlice = createSlice({
         state.restoCounter += 1;
       })
       .addCase(deleteRestaurant.rejected, (state, action) => {
+        state.status = false;
+        state.isLoading = false;
+        state.error = action.payload.response.data.message;
+      });
+    // suspendResto
+    builder
+      .addCase(suspendResto.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.status = false;
+      })
+      .addCase(suspendResto.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.status = true;
+        state.restoCounter += 1;
+      })
+      .addCase(suspendResto.rejected, (state, action) => {
         state.status = false;
         state.isLoading = false;
         state.error = action.payload.response.data.message;

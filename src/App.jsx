@@ -3,7 +3,7 @@ import Login from "./pages/login";
 import Register from "./pages/regester";
 import Header from "./commeptes/Header";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 import VerfieOtp from "./pages/VerfieOtp";
 import ForgetPassword from "./pages/ForgetPassword";
 import UpdatPassword from "./pages/UpdatePassword";
@@ -21,11 +21,13 @@ import Mains from "./commeptes/comepontesAdmin/Mains";
 import RegistrationForm from "./commeptes/comepontesAdmin/ContactForm";
 import TablesResto from "./commeptes/comepontesAdmin/TablesResto";
 import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
+import Dashboards from "./pages/Dashboards";
 
 //livreur
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
+
 import OrderDetail from "./commeptes/componentLivreur/CommanDetail";
 import CommndPending from "./commeptes/componentLivreur/CommandPending";
 import AcceptedCommandes from "./commeptes/componentLivreur/CommandeAccepted";
@@ -33,9 +35,7 @@ import LivreurStatistics from "./commeptes/componentLivreur/CommandeStatistic";
 import ProfilePage from './commeptes/componentLivreur/profile';
 import Commandes from "./commeptes/componentLivreur/commandes";
 
-
-
-
+import AdminProfile from "./pages/AdminProfile";
 
 function App() {
   const { error, status, isLogin } = useSelector((state) => state.auth);
@@ -49,19 +49,32 @@ function App() {
   }
 
   const location = useLocation();
-  const isDashboard = location.pathname.startsWith("/dashboard");
+  const isDashboard = location.pathname.startsWith("/dash");
 
   return (
     <>
       {!isDashboard && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/dash" element={<Dashboards />} />
+        <Route path="/admin" element={<AdminProfile />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRouteAdmin>
+              <Dashboard />
+            </ProtectedRouteAdmin>
+          }
+        />
+
 
         <Route path="/dashboard" element={<ProtectedRouteAdmin><Dashboard /></ProtectedRouteAdmin>}>
+
           <Route path="notifications" element={<Notifications />} />
           <Route index element={<Mains />} />
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />
+
         </Route>
 
         <Route path="/dashboard/livreur" element={<DashboardLivreur />}>
@@ -106,7 +119,6 @@ function App() {
             </ProtectedRoutAuth>
           }
         />
-
         <Route
           path="/updit-password"
           element={
@@ -115,7 +127,6 @@ function App() {
             </ProtectedRoutAuth>
           }
         />
-
         <Route
           path="/profile"
           element={

@@ -3,17 +3,17 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import fastfoodImage from '../../assets/fastfood.jpg';
 
-const CommndPending = () => {
+const AcceptedCommandes = () => {
   const [commandes, setCommandes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPendingCommandes = async () => {
+    const fetchAcceptedCommandes = async () => {
       try {
         const token = localStorage.getItem("token");
         const response = await axios.get(
-          "http://localhost:8080/api/livreur/commandes-pending",
+          "http://localhost:8080/api/livreur/commandes-accepted",
           {
             headers: {
               "Content-Type": "application/json",
@@ -24,29 +24,29 @@ const CommndPending = () => {
         setCommandes(response.data.pendingCommandes);
         setLoading(false);
       } catch (err) {
-        setError("Erreur lors de la récupération des commandes");
+        setError("Erreur lors de la récupération des commandes acceptées");
         setLoading(false);
       }
     };
 
-    fetchPendingCommandes();
+    fetchAcceptedCommandes();
   }, []);
 
-  const handleAccept = async (commandeId) => {
+  const handleConfirmDelivery = async (commandeId) => {
     const token = localStorage.getItem("token");
 
     Swal.fire({
-      title: "Êtes-vous sûr ?",
-      text: "Vous êtes sur le point d'accepter cette commande",
-      icon: "success",
+      title: "Confirmation de livraison",
+      text: "Êtes-vous sûr de confirmer la livraison de cette commande ?",
+      icon: "question",
       showCancelButton: true,
       confirmButtonColor: "green",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Oui, accepter",
+      confirmButtonText: "Oui, livrée",
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await axios.patch(`http://localhost:8080/api/livreur/accept-order/${commandeId}`, {}, {
+          await axios.patch(`http://localhost:8080/api/livreur/confirm-delivery/${commandeId}`, {}, {
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
@@ -56,53 +56,56 @@ const CommndPending = () => {
           setCommandes((prevCommandes) =>
             prevCommandes.filter((commande) => commande._id !== commandeId)
           );
-          Swal.fire("Acceptée!", "La commande a été acceptée.", "success");
+          Swal.fire("Livrée!", "La commande a été livrée avec succès.", "success");
         } catch (err) {
-          console.error("Erreur lors de l'acceptation de la commande:", err);
-          setError("Erreur lors de l'acceptation de la commande");
+          console.error("Erreur lors de la confirmation de la livraison:", err);
+          setError("Erreur lors de la confirmation de la livraison");
         }
       }
     });
   };
-
-  const handleRefuse = async (commandeId) => {
+  const handleRestoreOrder = async (commandeId) => {
     const token = localStorage.getItem("token");
-
+  
     Swal.fire({
-      title: "Raison du refus",
+      title: "Raison du retour",
       input: "text",
-      inputLabel: "Veuillez indiquer la raison du refus",
-      inputPlaceholder: "Raison de refus...",
+      inputLabel: "Veuillez indiquer la raison du retour",
+      inputPlaceholder: "Raison du retour...",
       showCancelButton: true,
-      confirmButtonText: "Refuser",
+      confirmButtonText: "Restaurer",
       cancelButtonText: "Annuler",
     }).then(async (result) => {
       if (result.isConfirmed && result.value) {
         try {
-          await axios.patch(`http://localhost:8080/api/livreur/refuse-order/${commandeId}`, {
-            refusalReason: result.value,
-          }, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+          await axios.patch(
+            `http://localhost:8080/api/livreur/restord-order/${commandeId}`,
+            {
+              restordReason: result.value,
             },
-          });
-
+            {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+  
           setCommandes((prevCommandes) =>
             prevCommandes.filter((commande) => commande._id !== commandeId)
           );
-          Swal.fire("Refusée!", "La commande a été refusée avec succès.", "success");
+          Swal.fire("Restaurée!", "La commande a été restaurée avec succès.", "success");
         } catch (err) {
-          console.error("Erreur lors du refus de la commande:", err);
-          setError("Erreur lors du refus de la commande");
+          console.error("Erreur lors du retour de la commande:", err);
+          setError("Erreur lors du retour de la commande");
         }
       }
     });
   };
+  
 
   if (loading) return <p>Chargement des commandes...</p>;
   if (error) return <p>{error}</p>;
-  if (commandes.length === 0) return <p>Aucune commande en attente.</p>; // Ajoutez cette ligne
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
@@ -114,12 +117,12 @@ const CommndPending = () => {
           <div
             className="h-48 bg-cover"
             style={{
-              backgroundImage: `url(${fastfoodImage})` 
+              backgroundImage: `url(${fastfoodImage})`
             }}
           ></div>
 
           <div className="p-6">
-            <h1 className="text-xl font-bold text-gray-800 dark:text-white">Commande en attente</h1>
+            <h1 className="text-xl font-bold text-gray-800 dark:text-white">Commande Acceptée</h1>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               <strong>Client:</strong> {commande.client.name} <br />
               <strong>Restaurant:</strong> {commande.restaurantName} <br />
@@ -131,44 +134,16 @@ const CommndPending = () => {
             <div className="flex justify-between mt-4">
               <button
                 className="flex items-center px-4 py-2 text-sm font-bold text-white uppercase transition-colors duration-300 transform bg-green-600 rounded hover:bg-green-500 focus:outline-none"
-                onClick={() => handleAccept(commande._id)}
+                onClick={() => handleConfirmDelivery(commande._id)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 mr-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                Accepter
+                Confirmer Livraison
               </button>
 
               <button
                 className="flex items-center px-4 py-2 text-sm font-bold text-white uppercase transition-colors duration-300 transform bg-red-600 rounded hover:bg-red-500 focus:outline-none"
-                onClick={() => handleRefuse(commande._id)}
+                onClick={() => handleRestoreOrder(commande._id)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 mr-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-                Refuser
+                Retourner
               </button>
             </div>
           </div>
@@ -178,4 +153,4 @@ const CommndPending = () => {
   );
 };
 
-export default CommndPending;
+export default AcceptedCommandes;

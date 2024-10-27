@@ -100,14 +100,10 @@ const NavBar = () => {
           )}
         </div>
 
-        {/* Toggle Dark Mode */}
-        <BsMoon
-          size={24}
-          className="text-gray-600 cursor-pointer hover:text-black"
-        />
+        
 
         {/* User Profile Link */}
-        <Link to="/profile" className="flex items-center space-x-2">
+        <Link to="/dashboard/livreur/profile" className="flex items-center space-x-2">
           <FaUserCircle
             size={30}
             className="text-gray-600 cursor-pointer hover:text-black"

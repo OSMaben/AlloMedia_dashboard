@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import {
-  AiFillHome,
-  AiOutlineForm,
-  AiFillShop,
-  AiFillProfile,
-  AiFillCheckCircle,
-  AiOutlineCloseCircle,
+    AiFillHome,
+    AiOutlineForm,
+    AiFillShop,
+    AiFillProfile,
+    AiFillCheckCircle,
+
+
 } from "react-icons/ai"; 
 
 const Nav = () => {
@@ -14,7 +15,7 @@ const Nav = () => {
     <nav
       aria-label="side bar"
       aria-orientation="vertical"
-      className="flex-none flex flex-col items-center text-center bg-gray-50 text-black border-r w-14 shadow-lg"
+      className="flex-none flex flex-col items-center text-center bg-white text-black border-r w-14 shadow-lg h-screen" 
     >
       {/* Logo */}
       <div className="h-14 flex items-center justify-center w-full">
@@ -41,21 +42,21 @@ const Nav = () => {
           },
           {
             // Commandes bien livrées
-            to: "/commandes-delivered",
-            title: "Delivered",
+            to: "/dashboard/livreur/commandes-accepted",
+            title: "Accepted",
             icon: <AiFillCheckCircle size={20} />,
           },
           {
-            // Commandes refusées
-            to: "/commandes-refused",
-            title: "Refused",
-            icon: <AiOutlineCloseCircle size={20} />,
+            // Afficher les statistiques des livreurs
+            to: "/dashboard/livreur/statistique",
+            title: "Statistics",
+            icon: <AiFillProfile size={20} />,
           },
           {
             // Afficher les statistiques des livreurs
-            to: "/livreur/statistique",
-            title: "Statistics",
-            icon: <AiFillProfile size={20} />,
+            to: "/dashboard/livreur/commandes",
+            title: "commandes",
+            icon: <AiFillShop size={20} />,
           },
         ].map((item, index) => (
           <li key={index} className="w-full">
@@ -65,7 +66,7 @@ const Nav = () => {
               className={`h-12 px-2 flex items-center justify-center text-sm ${
                 window.location.pathname === item.to
                   ? "bg-teal-600 text-white"
-                  : "hover:bg-gray-200 hover:text-gray-800 text-gray-600"
+                  : "hover:bg-black hover:text-white text-gray-600" // Changer la couleur de fond et de texte au hover
               } w-full transition-colors duration-300`}
             >
               <span>{item.icon}</span>

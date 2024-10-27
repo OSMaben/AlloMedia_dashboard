@@ -15,7 +15,7 @@ const Dashboards = () => {
         <div className="p-6 w-full">
           <Analiteque />
           <TableRestoNo />
-          <Statistics />
+          {/* <Statistics /> */}
         </div>
       </main>
     </>

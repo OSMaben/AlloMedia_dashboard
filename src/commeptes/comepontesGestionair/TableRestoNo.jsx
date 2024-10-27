@@ -7,9 +7,9 @@ import EmployeeTable from "./Employees";
 const TableRestoNo = () => {
   return (
     <div className="grid grid-cols-1  gap-6 mb-6">
-      <Table2 />
-      <AllRestaurants/>
-      <Table1 />
+      {/* <Table2 />
+      <AllRestaurants/>  */}
+      {/* <Table1 /> */}
       <EmployeeTable/>
       
     </div>

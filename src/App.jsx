@@ -23,7 +23,7 @@ import TablesResto from "./commeptes/comepontesAdmin/TablesResto";
 import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
 import Dashboards from "./pages/Dashboards";
 import GestionaireDashBoard from './pages/GestionairDashboard';
-
+import ProtectedRoutergestionair from "./gaurd/ProtectedRouteGestionair";
 
 //livreur
 import DashboardLivreur from "./livreur/dashbord";
@@ -52,7 +52,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dash" element={<Dashboards />} />
-        <Route path="/Manager" element={<GestionaireDashBoard />} />
+        <Route 
+          path="/Manager"
+          element={
+            <ProtectedRoutergestionair>
+              <GestionaireDashBoard />
+            </ProtectedRoutergestionair>
+          }
+          />
         <Route path="/admin" element={<AdminProfile />} />
         <Route
           path="/dashboard"

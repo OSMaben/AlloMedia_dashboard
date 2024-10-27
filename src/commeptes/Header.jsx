@@ -319,7 +319,7 @@ li {
                   )}
                   {user.user.role === "manager" && (
                     <NavLink
-                      to="/manager-dashboard"
+                      to="/Manager"
                       className="text-[1.5rem] font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                     >
                        Dashboard
@@ -327,7 +327,7 @@ li {
                   )}
                   {user.user.role === "admin" && (
                     <NavLink
-                      to="/dashboard"
+                      to="/dash"
                       className="text-[1.5rem] font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                     >
                        Dashboard
@@ -379,7 +379,7 @@ li {
 
                     {user.role === "client" && <NavLink to="/dashboard">Client Dashboard</NavLink>}
                     {user.role === "livreur" && <NavLink to="/livreur-dashboard">Livreur Dashboard</NavLink>}
-                    {user.role === "manager" && <NavLink to="/manager-dashboard">Manager Dashboard</NavLink>}
+                    {user.role === "manager" && <NavLink to="/dash">Manager Dashboard</NavLink>}
                     {user.role === "admin" && <NavLink to="/admin-dashboard">Admin Dashboard</NavLink>}
                     
                     <Button variant="text" onClick={logout}>

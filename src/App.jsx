@@ -22,21 +22,14 @@ import RegistrationForm from "./commeptes/comepontesAdmin/ContactForm";
 import TablesResto from "./commeptes/comepontesAdmin/TablesResto";
 import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
 import Dashboards from "./pages/Dashboards";
+import GestionaireDashBoard from './pages/GestionairDashboard';
+
 
 //livreur
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
 import AdminProfile from "./pages/AdminProfile";
-
-
-
-
-
-
-
-
-
 
 
 function App() {
@@ -59,6 +52,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dash" element={<Dashboards />} />
+        <Route path="/Manager" element={<GestionaireDashBoard />} />
         <Route path="/admin" element={<AdminProfile />} />
         <Route
           path="/dashboard"

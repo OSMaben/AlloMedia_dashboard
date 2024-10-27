@@ -3,7 +3,7 @@ import Login from "./pages/login";
 import Register from "./pages/regester";
 import Header from "./commeptes/Header";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 import VerfieOtp from "./pages/VerfieOtp";
 import ForgetPassword from "./pages/ForgetPassword";
 import UpdatPassword from "./pages/UpdatePassword";
@@ -21,6 +21,7 @@ import Mains from "./commeptes/comepontesAdmin/Mains";
 import RegistrationForm from "./commeptes/comepontesAdmin/ContactForm";
 import TablesResto from "./commeptes/comepontesAdmin/TablesResto";
 import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
+import Dashboards from "./pages/Dashboards";
 
 //livreur
 import DashboardLivreur from "./livreur/dashbord";
@@ -56,16 +57,29 @@ function App() {
       {!isDashboard && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/dash" element={<Dashboards />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRouteAdmin>
+              <Dashboard />
+            </ProtectedRouteAdmin>
+          }
+        />
+
 
         <Route path="/dashboard" element={<ProtectedRouteAdmin><Dashboard /></ProtectedRouteAdmin>}>
+
           <Route path="notifications" element={<Notifications />} />
           <Route index element={<Mains />} />
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />
+
         </Route>
 
         <Route path="/dashboard/livreur" element={<DashboardLivreur />}>
           <Route index element={<MainsLiv />} />
+
           <Route path="order-detail/:id" element={<OrderDetail />} />
           <Route path="order-pending" element={<CommndPending  />} />
           <Route path="commandes-accepted" element={<AcceptedCommandes />} />
@@ -74,6 +88,8 @@ function App() {
           <Route path="profile" element={<  ProfilePage />} />
         </Route>
 
+
+        </Route>
         <Route
           path="/signin"
           element={
@@ -106,7 +122,6 @@ function App() {
             </ProtectedRoutAuth>
           }
         />
-
         <Route
           path="/updit-password"
           element={
@@ -115,7 +130,6 @@ function App() {
             </ProtectedRoutAuth>
           }
         />
-
         <Route
           path="/profile"
           element={

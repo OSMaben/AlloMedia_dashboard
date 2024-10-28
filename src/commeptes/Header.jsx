@@ -36,16 +36,6 @@ const NAV_MENU = [
     icon: faKey,
     path: "/signin",
   },
-  {
-    name: "Dashboard",
-    icon: faKey,
-    path: "/dashboard",
-  },
-  {
-    name: "Dashboar Livreur",
-    icon: faKey,
-    path: "/dashboard/livreur",
-  },
 ];
 
 const Header = () => {
@@ -321,7 +311,7 @@ li {
                   )}
                   {user.user.role === "livreur" && (
                     <NavLink
-                      to="/livreur"
+                      to="dashboard/livreur"
                       className="text-[1.5rem] font-medium leading-6 text-gray-600 whitespace-no-wrap transition duration-150 ease-in-out hover:text-gray-900"
                     >
                        Dashboard

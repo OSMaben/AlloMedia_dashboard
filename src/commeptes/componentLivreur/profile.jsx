@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'; // Importez useEffect et useState
-import axios from 'axios'; // N'oubliez pas d'importer axios
-import 'mdb-react-ui-kit/dist/css/mdb.min.css'; 
-
+import React, { useEffect, useState } from 'react'; 
+import axios from 'axios'; 
 import {
   MDBCol,
   MDBContainer,
@@ -19,6 +17,18 @@ export default function ProfilePage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    useEffect(() => {
+       
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css'; 
+        document.head.appendChild(link);
+  
+        return () => {
+          document.head.removeChild(link); 
+        };
+      }, []);
+      
     useEffect(() => {
       const fetchProfile = async () => {
         try {
@@ -43,17 +53,15 @@ export default function ProfilePage() {
       fetchProfile();
     }, []);
 
-    // Si le profil est en cours de chargement
     if (loading) {
       return <div>Chargement...</div>;
     }
 
-    // Si une erreur se produit
+ 
     if (error) {
       return <div>{error}</div>;
     }
 
-    // Si le profil est récupéré avec succès
     return (
       <section style={{ backgroundColor: '#eee', width: '100%' }}>
         <MDBContainer className="py-5 h-100">

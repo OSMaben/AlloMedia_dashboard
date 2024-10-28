@@ -40,9 +40,7 @@ import AcceptedCommandes from "./commeptes/componentLivreur/CommandeAccepted";
 import LivreurStatistics from "./commeptes/componentLivreur/CommandeStatistic";
 import ProfilePage from './commeptes/componentLivreur/profile';
 import Commandes from "./commeptes/componentLivreur/commandes";
-import AdminProfile from "./pages/AdminProfile";
 
-import AdminProfile from "./pages/AdminProfile";
 
 import AdminProfile from "./commeptes/comepontesAdmin/AdminProfile";
 import MainAdmin from "./commeptes/comepontesAdmin/MainAdmin";
@@ -80,7 +78,7 @@ function App() {
         <Route path="/restaurant/:id" element={<RestaurantDetails />} />
         <Route path="/cart" element={<Cart />} />
 
-        /> 
+        
 
         <Route path="/admin" element={<AdminProfile />} />
 
@@ -89,20 +87,12 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRouteAdmin>
- AD-1-client/rechercher-restaurants
+
               <Dashboard />
             </ProtectedRouteAdmin>
           }
         >
-          <Route path="notifications" element={<Notifications />} />
-          <Route index element={<Mains />} />
-          <Route path="form" element={<RegistrationForm />} />
-          <Route path="restoActive" element={<TablesResto />} />
-
-              <Dashboards />
-            </ProtectedRouteAdmin>
-          }
-        >
+          
           <Route index element={<MainAdmin />} />
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />

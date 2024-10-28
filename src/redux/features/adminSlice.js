@@ -12,6 +12,7 @@ const initialState = {
   resturs: [],
   restaurantsapproved: [],
   ListNotification: [],
+  
 };
 
 export const userWithResto = createAsyncThunk(
@@ -64,6 +65,8 @@ export const getRestoPending = createAsyncThunk(
     }
   }
 );
+
+
 
 export const accepterResto = createAsyncThunk(
   "admin/accepterResto",
@@ -469,5 +472,13 @@ const adminSlice = createSlice({
       });
   },
 });
+
+
+
+
+
+
+
+
 export const { addNotification } = adminSlice.actions;
 export default adminSlice.reducer;

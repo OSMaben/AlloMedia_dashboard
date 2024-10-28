@@ -122,19 +122,6 @@ function App() {
         </Route>
 
         <Route
-          path="/livreur"
-          element={
-            <ProtectedRouteAdmin>
-              <DashboardLivreur />
-            </ProtectedRouteAdmin>
-          }
-        >
-          <Route path="notifications" element={<NotificationsLiv />} />
-          <Route index element={<MainsLiv />} />
-
-        </Route>
-
-        <Route
           path="/signin"
           element={
             <ProtectedRoutAuth>

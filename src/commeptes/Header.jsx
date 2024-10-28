@@ -3,7 +3,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartPie, faUser, faUserCircle, faKey } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChartPie,
+  faUser,
+  faUserCircle,
+  faKey,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Navbar as MTNavbar,
   Collapse,
@@ -46,7 +51,6 @@ const NAV_MENU = [
     icon: faKey,
     path: "/dashboard/livreur",
   },
-
 ];
 
 const Header = () => {
@@ -61,15 +65,18 @@ const Header = () => {
   useEffect(() => {
     const updateCartFromStorage = () => {
       try {
-        let items = JSON.parse(localStorage.getItem('restaurantCart')) || [];
+        let items = JSON.parse(localStorage.getItem("restaurantCart")) || [];
         if (!items.length) {
-          items = JSON.parse(localStorage.getItem('cartItems')) || [];
+          items = JSON.parse(localStorage.getItem("cartItems")) || [];
         }
         setCartItems(items);
-        const count = items.reduce((total, item) => total + (item.quantity || 0), 0);
+        const count = items.reduce(
+          (total, item) => total + (item.quantity || 0),
+          0
+        );
         setCartCount(count);
       } catch (error) {
-        console.error('Error parsing cart data:', error);
+        console.error("Error parsing cart data:", error);
         setCartItems([]);
         setCartCount(0);
       }
@@ -78,23 +85,23 @@ const Header = () => {
     updateCartFromStorage();
 
     const handleStorageChange = (e) => {
-      if (e.key === 'restaurantCart' || e.key === 'cartItems') {
+      if (e.key === "restaurantCart" || e.key === "cartItems") {
         updateCartFromStorage();
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     const interval = setInterval(updateCartFromStorage, 1000);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
       clearInterval(interval);
     };
   }, []);
 
   const navigateToCart = () => {
-    navigate('/cart');
+    navigate("/cart");
   };
 
   const logout = useCallback(() => {
@@ -141,22 +148,42 @@ const Header = () => {
               Home
             </NavLink>
             {isLogin && (
-              <NavLink to="/profile" className="text-gray-600 hover:text-gray-900">
-                Profile
-              </NavLink>
+              <>
+                <NavLink
+                  to="/dashboard"
+                  className="text-gray-600 hover:text-gray-900"
+                >
+                  admin
+                </NavLink>
+                <NavLink
+                  to="/profile"
+                  className="text-gray-600 hover:text-gray-900"
+                >
+                  Profile
+                </NavLink>
+              </>
             )}
             {isLogin && <CartButton />}
             {!isLogin ? (
               <>
-                <NavLink to="/signin" className="text-gray-600 hover:text-gray-900">
+                <NavLink
+                  to="/signin"
+                  className="text-gray-600 hover:text-gray-900"
+                >
                   Sign in
                 </NavLink>
-                <NavLink to="/signup" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                <NavLink
+                  to="/signup"
+                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+                >
                   Sign up
                 </NavLink>
               </>
             ) : (
-              <button onClick={logout} className="text-gray-600 hover:text-gray-900">
+              <button
+                onClick={logout}
+                className="text-gray-600 hover:text-gray-900"
+              >
                 Log out
               </button>
             )}
@@ -169,12 +196,32 @@ const Header = () => {
               className="text-gray-600"
             >
               {menuOpen ? (
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               ) : (
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               )}
             </button>

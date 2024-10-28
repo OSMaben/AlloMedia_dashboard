@@ -60,16 +60,20 @@ function App() {
       {!isDashboard && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dash" element={<Dashboards />} />
-        <Route path="/admin" element={<AdminProfile />} />
         <Route
           path="/dashboard"
           element={
             <ProtectedRouteAdmin>
-              <Dashboard />
+              <Dashboards />
             </ProtectedRouteAdmin>
           }
-        />
+        >
+          <Route index element={<MainAdmin />} />
+          <Route path="form" element={<RegistrationForm />} />
+          <Route path="restoActive" element={<TablesResto />} />
+          <Route path="admin" element={<AdminProfile />} />
+        </Route>
+
         <Route path="/search" element={<Search />} />
         <Route path="/restaurant/:id" element={<RestaurantDetails />} />
         <Route path="/cart" element={<Cart />} />

@@ -27,17 +27,8 @@ import Dashboards from "./pages/Dashboards";
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
-import AdminProfile from "./pages/AdminProfile";
-
-
-
-
-
-
-
-
-
-
+import AdminProfile from "./commeptes/comepontesAdmin/AdminProfile";
+import MainAdmin from "./commeptes/comepontesAdmin/MainAdmin";
 
 function App() {
   const { error, status, isLogin } = useSelector((state) => state.auth);
@@ -51,13 +42,13 @@ function App() {
   }
 
   const location = useLocation();
-  const isDashboard = location.pathname.startsWith("/dash");
+  const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
     <>
       {!isDashboard && <Header />}
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} />
         <Route path="/dash" element={<Dashboards />} />
         <Route path="/admin" element={<AdminProfile />} />
         <Route
@@ -67,22 +58,34 @@ function App() {
               <Dashboard />
             </ProtectedRouteAdmin>
           }
-        />
+        /> */}
 
+        <Route path="/admin" element={<AdminProfile />} />
 
-        <Route path="/dashboard" element={<ProtectedRouteAdmin><Dashboard /></ProtectedRouteAdmin>}>
-
-          <Route path="notifications" element={<Notifications />} />
-          <Route index element={<Mains />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRouteAdmin>
+              <Dashboards />
+            </ProtectedRouteAdmin>
+          }
+        >
+          <Route index element={<MainAdmin />} />
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />
-
+          <Route path="admin" element={<AdminProfile />} />
         </Route>
 
-        <Route path="/livreur" element={<ProtectedRouteAdmin><DashboardLivreur /></ProtectedRouteAdmin>}>
+        <Route
+          path="/livreur"
+          element={
+            <ProtectedRouteAdmin>
+              <DashboardLivreur />
+            </ProtectedRouteAdmin>
+          }
+        >
           <Route path="notifications" element={<NotificationsLiv />} />
           <Route index element={<MainsLiv />} />
-
         </Route>
         <Route
           path="/signin"
@@ -157,13 +160,7 @@ function App() {
             </ProtectedRoutAuth>
           }
         />
-
-       
-
       </Routes>
-
-
-
     </>
   );
 }

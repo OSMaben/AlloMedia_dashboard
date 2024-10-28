@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaCheck, FaTimes, FaTrashAlt } from "react-icons/fa";
 import {
+  activeResto,
   deleteRestaurant,
   getrestaurantsapproved,
   suspendResto,
@@ -95,7 +96,7 @@ const AllRestaurants = () => {
           <div className="relative w-full mr-2">
             <input
               type="text"
-              onChange={(e)=> searchByName(e)}
+              onChange={(e) => searchByName(e)}
               className="py-2 px-2  bg-gray-50  outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500"
               placeholder="Search by name..."
             />
@@ -188,11 +189,21 @@ const AllRestaurants = () => {
                           onClick={() => handleSuspend(restaurant._id)}
                         />
                       ) : (
-                        <FaCheck className="w-4 h-4" />
+                        <FaCheck
+                          className="w-4 h-4"
+                          onClick={() =>
+                            dispatch(activeResto({ id: restaurant._id }))
+                          }
+                        />
                       )}
                     </button>
                     <button className="text-red-500 hover:text-red-700">
-                      <FaTrashAlt className="w-4 h-4" />
+                      <FaTrashAlt
+                        className="w-4 h-4"
+                        onClick={() =>
+                          dispatch(deleteRestaurant({ id: restaurant._id }))
+                        }
+                      />
                     </button>
                   </div>
                 </td>

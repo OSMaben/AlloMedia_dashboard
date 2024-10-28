@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { isLogins } from "./redux/features/authSlice";
 
 // Importing components
-import Home from "./pages/Home";
 import Login from "./pages/login";
 import Register from "./pages/regester";
 import Header from "./commeptes/Header";
+
+import Home from "./pages/home/Home";
+
 import VerfieOtp from "./pages/VerfieOtp";
 import ForgetPassword from "./pages/ForgetPassword";
 import UpdatPassword from "./pages/UpdatePassword";
@@ -30,6 +32,7 @@ import Dashboard from "./admin/Dashboard";
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
+import AdminProfile from "./pages/AdminProfile";
 
 function App() {
   const { isLogin } = useSelector((state) => state.auth);
@@ -41,7 +44,7 @@ function App() {
   }
 
   const location = useLocation();
-  const isDashboard = location.pathname.startsWith("/dashboard");
+  const isDashboard = location.pathname.startsWith("/dash");
 
   return (
     <>
@@ -49,6 +52,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dash" element={<Dashboards />} />
+        <Route path="/admin" element={<AdminProfile />} />
         <Route
           path="/dashboard"
           element={

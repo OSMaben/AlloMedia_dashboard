@@ -220,6 +220,7 @@ const adminSlice = createSlice({
   initialState,
   reducers: {
     addNotification(state, action) {
+      state.restoCounter += 1;
       state.ListNotification = [action.payload, ...state.ListNotification];
     },
   },

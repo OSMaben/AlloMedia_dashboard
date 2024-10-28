@@ -8,6 +8,7 @@ const MainAdmin = () => {
     <>
       <Analiteque />
       <TableRestoNo />
+      {/* <Statistics /> */}
     </>
   );
 };

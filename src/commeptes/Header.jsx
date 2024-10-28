@@ -35,6 +35,18 @@ const NAV_MENU = [
     icon: faKey,
     path: "/signin",
   },
+
+  {
+    name: "Dashboard",
+    icon: faKey,
+    path: "/dashboard",
+  },
+  {
+    name: "Dashboar Livreur",
+    icon: faKey,
+    path: "/dashboard/livreur",
+  },
+
 ];
 
 const Header = () => {

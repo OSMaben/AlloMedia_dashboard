@@ -8,6 +8,7 @@ const initialState = {
   error: null,
   status: false,
   restoCounter: 0,
+  unreadCount: 0,
   resturs: [],
   restaurantsapproved: [],
   ListNotification: [],
@@ -189,6 +190,31 @@ export const suspendResto = createAsyncThunk(
   }
 );
 
+export const activeResto = createAsyncThunk(
+  "admin/activeResto",
+  async (data, thunkAPI) => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/api/v1/admin/active/restaurants/${data.id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
+
+      return res.data;
+    } catch (error) {
+      console.error(error.response?.data || error.message);
+
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const getListNotification = createAsyncThunk(
   "admin/getListNotification",
   async (data, thunkAPI) => {
@@ -214,12 +240,39 @@ export const getListNotification = createAsyncThunk(
   }
 );
 
+export const updutListNotification = createAsyncThunk(
+  "admin/updutListNotification",
+  async (data, thunkAPI) => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await axios.get(
+        `http://localhost:8080/api/v1/admin/updutListNotification`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(res);
+
+      return res.data;
+    } catch (error) {
+      console.error(error.response?.data || error.message);
+
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // Create the slice
 const adminSlice = createSlice({
   name: "admin",
   initialState,
   reducers: {
     addNotification(state, action) {
+      state.restoCounter += 1;
+      state.unreadCount += 1;
       state.ListNotification = [action.payload, ...state.ListNotification];
     },
   },
@@ -332,8 +385,28 @@ const adminSlice = createSlice({
         state.status = true;
         console.log(action.payload);
         state.ListNotification = action.payload.notifications;
+        state.unreadCount = action.payload.unreadCount;
       })
       .addCase(getListNotification.rejected, (state, action) => {
+        state.status = false;
+        state.isLoading = false;
+        state.error = action.payload.response.data.message;
+      });
+
+    // updutListNotification
+    builder
+      .addCase(updutListNotification.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.status = false;
+      })
+      .addCase(updutListNotification.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.status = true;
+        state.unreadCount = action.payload.unreadCount;
+      })
+      .addCase(updutListNotification.rejected, (state, action) => {
         state.status = false;
         state.isLoading = false;
         state.error = action.payload.response.data.message;
@@ -371,6 +444,25 @@ const adminSlice = createSlice({
         state.restoCounter += 1;
       })
       .addCase(suspendResto.rejected, (state, action) => {
+        state.status = false;
+        state.isLoading = false;
+        state.error = action.payload.response.data.message;
+      });
+
+    // activeResto
+    builder
+      .addCase(activeResto.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.status = false;
+      })
+      .addCase(activeResto.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.status = true;
+        state.restoCounter += 1;
+      })
+      .addCase(activeResto.rejected, (state, action) => {
         state.status = false;
         state.isLoading = false;
         state.error = action.payload.response.data.message;

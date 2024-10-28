@@ -13,6 +13,7 @@ const initialState = {
   messageForgetPassword: null,
   message: null,
   isAdmin: true,
+  isGestionair:true
 };
 
 // Create async thunk for registering a user

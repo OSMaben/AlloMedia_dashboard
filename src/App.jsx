@@ -32,6 +32,16 @@ import Dashboard from "./admin/Dashboard";
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
+
+
+import OrderDetail from "./commeptes/componentLivreur/CommanDetail";
+import CommndPending from "./commeptes/componentLivreur/CommandPending";
+import AcceptedCommandes from "./commeptes/componentLivreur/CommandeAccepted";
+import LivreurStatistics from "./commeptes/componentLivreur/CommandeStatistic";
+import ProfilePage from './commeptes/componentLivreur/profile';
+import Commandes from "./commeptes/componentLivreur/commandes";
+import AdminProfile from "./pages/AdminProfile";
+
 import AdminProfile from "./pages/AdminProfile";
 
 import AdminProfile from "./commeptes/comepontesAdmin/AdminProfile";
@@ -100,6 +110,17 @@ function App() {
  
         </Route>
 
+        <Route path="/dashboard/livreur" element={<DashboardLivreur />}>
+          <Route index element={<MainsLiv />} />
+
+          <Route path="order-detail/:id" element={<OrderDetail />} />
+          <Route path="order-pending" element={<CommndPending  />} />
+          <Route path="commandes-accepted" element={<AcceptedCommandes />} />
+          <Route path="statistique" element={<LivreurStatistics />} />
+          <Route path="commandes" element={<Commandes />} />
+          <Route path="profile" element={<  ProfilePage />} />
+        </Route>
+
         <Route
           path="/livreur"
           element={
@@ -110,6 +131,7 @@ function App() {
         >
           <Route path="notifications" element={<NotificationsLiv />} />
           <Route index element={<MainsLiv />} />
+
         </Route>
 
         <Route

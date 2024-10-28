@@ -1,96 +1,154 @@
-'use client';
-
 import { useState, useEffect } from 'react';
-import { Plus, Minus, ShoppingCart } from 'lucide-react';
-import { Button, Card, CardHeader, CardBody, CardFooter, Typography, Input } from '@material-tailwind/react'; // Importing Input from Material Tailwind
+import { useNavigate } from 'react-router-dom';
+import { Plus, Minus, Trash2 } from 'lucide-react';
 
-export default function Cart() {
-  const [quantity, setQuantity] = useState(1);
-  const [cartItems, setCartItems] = useState([]);
-  const [cartTotal, setCartTotal] = useState(0);
+const Cart = () => {
+  const navigate = useNavigate();
+  
+  // Initialize cart from localStorage
+  const [cartItems, setCartItems] = useState(() => {
+    const savedCart = localStorage.getItem('restaurantCart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
 
-  const product = {
-    productId: '123',
-    name: 'Awesome Product',
-    price: 29.99
-  };
-
+  // Save to localStorage whenever cart changes
   useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    setCartItems(storedCartItems);
-    calculateCartTotal(storedCartItems);
-  }, []);
+    localStorage.setItem('restaurantCart', JSON.stringify(cartItems));
+  }, [cartItems]);
 
-  const calculateCartTotal = (items) => {
-    const total = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    setCartTotal(total);
+  const updateQuantity = (itemId, newQuantity) => {
+    setCartItems(prevItems => {
+      if (newQuantity < 1) {
+        return prevItems.filter(item => item.id !== itemId);
+      }
+      return prevItems.map(item =>
+        item.id === itemId
+          ? { ...item, quantity: newQuantity }
+          : item
+      );
+    });
   };
 
-  const increaseQuantity = () => setQuantity(prev => prev + 1);
-  const decreaseQuantity = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  const removeFromCart = (itemId) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
+  };
 
-  const handleAddToCart = () => {
-    const updatedCartItems = [...cartItems];
-    const existingItemIndex = updatedCartItems.findIndex(item => item.productId === product.productId);
+  const getCartTotal = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
 
-    if (existingItemIndex > -1) {
-      // If the item already exists in the cart, update its quantity
-      updatedCartItems[existingItemIndex].quantity += quantity;
-    } else {
-      // Otherwise, add the new item to the cart
-      updatedCartItems.push({ ...product, quantity });
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem('restaurantCart');
+  };
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="max-w-6xl mx-auto p-4 text-center">
+        <h2 className="text-2xl font-bold mb-4">Your Cart is Empty</h2>
+        <button
+          onClick={() => navigate('/')}
+          className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700"
+        >
+          Continue Shopping
+        </button>
+      </div>
+    );
+  }
+
+  // Group items by restaurant
+  const restaurantGroups = cartItems.reduce((acc, item) => {
+    if (!acc[item.restaurantId]) {
+      acc[item.restaurantId] = {
+        name: item.restaurantName,
+        items: []
+      };
     }
-
-    setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // Save to local storage
-    setQuantity(1); // Reset quantity after adding to cart
-    calculateCartTotal(updatedCartItems);
-  };
+    acc[item.restaurantId].items.push(item);
+    return acc;
+  }, {});
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
-          <Typography variant="h5">{product.name}</Typography>
-        </CardHeader>
-        <CardBody className="flex flex-col items-center space-y-4">
-          <p className="text-2xl font-bold">${product.price.toFixed(2)}</p>
-          <div className="flex items-center space-x-2">
-            <Button
-              variant="outlined"
-              onClick={decreaseQuantity}
-              aria-label="Decrease quantity"
-            >
-              <Minus className="h-4 w-4" />
-            </Button>
-            <Input
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-              className="w-16 text-center"
-            />
-            <Button
-              variant="outlined"
-              onClick={increaseQuantity}
-              aria-label="Increase quantity"
-            >
-              <Plus className="h-4 w-4" />
-            </Button>
-          </div>
-        </CardBody>
-        <CardFooter>
-          <Button onClick={handleAddToCart} className="w-full bg-blue-500 text-white">
-            <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
-          </Button>
-        </CardFooter>
-      </Card>
+    <div className="max-w-6xl mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-6">Your Cart</h2>
 
-      <div className="mt-8 text-center">
-        <h2 className="text-xl font-bold mb-2">Cart Summary</h2>
-        <p>Items in cart: {cartItems.reduce((acc, item) => acc + item.quantity, 0)}</p>
-        <p>Total: ${cartTotal.toFixed(2)}</p>
+      <div className="bg-white rounded-lg shadow-lg p-6">
+        {Object.entries(restaurantGroups).map(([restaurantId, restaurant]) => (
+          <div key={restaurantId} className="mb-8">
+            <h3 className="text-xl font-semibold mb-4">{restaurant.name}</h3>
+            {restaurant.items.map((item) => (
+              <div key={item.id} className="flex items-center justify-between py-4 border-b">
+                <div className="flex-1">
+                  <h4 className="font-semibold">{item.name}</h4>
+                  <p className="text-gray-600">${item.price} each</p>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3">
+                    <button
+                      className="p-1 rounded-full bg-gray-200 hover:bg-gray-300"
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    >
+                      <Minus className="h-4 w-4" />
+                    </button>
+                    
+                    <span className="w-8 text-center">{item.quantity}</span>
+                    
+                    <button
+                      className="p-1 rounded-full bg-gray-200 hover:bg-gray-300"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </button>
+                  </div>
+
+                  <span className="w-24 text-right font-semibold">
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </span>
+
+                  <button
+                    onClick={() => removeFromCart(item.id)}
+                    className="p-2 text-red-600 hover:text-red-800"
+                  >
+                    <Trash2 className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+
+        <div className="mt-6 flex justify-between items-center">
+          <div className="text-xl font-bold">
+            Total: ${getCartTotal().toFixed(2)}
+          </div>
+          
+          <div className="flex gap-4">
+            <button
+              onClick={() => navigate('/')}
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+            >
+              Continue Shopping
+            </button>
+            
+            <button
+              onClick={clearCart}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+            >
+              Clear Cart
+            </button>
+            
+            <button
+              onClick={() => navigate('/checkout')}
+              className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700"
+            >
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default Cart;

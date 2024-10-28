@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom"; // استيراد Outlet من react-router-dom
+import { Outlet } from "react-router-dom"; 
 import Nav from "../commeptes/comepontesAdmin/Nav1";
 import Nav2 from "../commeptes/comepontesAdmin/Nav2";
 import HeaderAdmin from "../commeptes/comepontesAdmin/HeaderAdmin";

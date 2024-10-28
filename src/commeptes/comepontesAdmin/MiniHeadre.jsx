@@ -5,14 +5,26 @@ import { io } from "socket.io-client";
 import {
   addNotification,
   getListNotification,
+  updutListNotification,
 } from "../../redux/features/adminSlice";
+import formatDate from "../../utils/formateData";
+import { Link } from "react-router-dom";
 
 const MiniHeader = () => {
   const [isNotificationOpen, setNotificationOpen] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
   const dispatch = useDispatch();
-  const { error, status, isLoading, resturs, restoCounter, ListNotification } =
-    useSelector((state) => state.admin);
+  const {
+    error,
+    status,
+    unreadCount,
+    isLoading,
+    resturs,
+    restoCounter,
+    ListNotification,
+  } = useSelector((state) => state.admin);
+  const { user } = useSelector((state) => state.auth);
+  console.log(unreadCount);
 
   useEffect(() => {
     dispatch(getListNotification());
@@ -29,7 +41,8 @@ const MiniHeader = () => {
     });
 
     socket.on("newRestaurantNotification", (data) => {
-      console.log("New Restaurant Notification:", data);
+      console.log(unreadCount);
+
       dispatch(addNotification(data));
     });
 
@@ -46,38 +59,31 @@ const MiniHeader = () => {
   }, []);
 
   return (
-    <div className="py-2 px-6 bg-white flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30">
+    <div className="py-2 sm:px-6 px-2 bg-white flex items-center shadow-md shadow-black/5 sticky top-0 left-0 z-30">
       <button type="button" className="text-lg text-gray-600 sidebar-toggle">
         <i className="ri-menu-line" />
       </button>
-      <ul className="flex items-center text-sm ml-4">
+      <ul className="flex items-center text-sm sm:ml-4">
         <li className="mr-2">
           <a href="#" className="text-gray-400 hover:text-gray-600 font-medium">
             Dashboard
           </a>
         </li>
-        <li className="text-gray-600 mr-2 font-medium">/</li>
-        <li className="text-gray-600 mr-2 font-medium">Analytics</li>
       </ul>
       <ul className="ml-auto flex items-center">
-        {/* Search Icon */}
-        <li className="mr-1">
-          <button
-            type="button"
-            className="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"
-          >
-            <FaSearch />
-          </button>
-        </li>
-
         {/* Notification Dropdown */}
         <li className="mr-4 relative">
           <button
             type="button"
             onClick={() => setNotificationOpen(!isNotificationOpen)}
-            className="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600"
+            className="text-gray-400 w-8 h-8 rounded flex items-center justify-center hover:bg-gray-50 hover:text-gray-600 bg-gray-100"
           >
-            <FaBell />
+            <FaBell onClick={() => dispatch(updutListNotification())} />
+            {unreadCount > 0 && (
+              <span className="text-white bg-red-500 h-4 w-4 font-bold rounded-full text-[9px] text-center absolute -top-1 -right-2">
+                {unreadCount}
+              </span>
+            )}
           </button>
           {isNotificationOpen && (
             <div className="absolute right-0 mt-4 w-72 bg-white shadow-lg rounded-lg z-50">
@@ -93,7 +99,7 @@ const MiniHeader = () => {
                         alt="profile"
                         className="w-10 h-10 rounded-full object-cover mr-3 shadow-md"
                       />
-                      <div className="flex-1">
+                      <div className="flex-1 gap-1">
                         <span className="font-semibold text-gray-900">
                           {notification.mangerId.name}
                         </span>
@@ -103,6 +109,9 @@ const MiniHeader = () => {
                             {notification.message}
                           </span>
                         </p>
+                        <span className="font-medium text-xs text-gray-500">
+                          {formatDate(notification.createdAt)}{" "}
+                        </span>
                       </div>
                     </li>
                   ))
@@ -118,23 +127,13 @@ const MiniHeader = () => {
 
         {/* Profile Dropdown */}
         <li className="relative">
-          <button
-            type="button"
-            onClick={() => setProfileOpen(!isProfileOpen)}
-            className="flex items-center text-gray-400 hover:text-gray-600"
-          >
-            <FaUserCircle className="text-2xl" />
-            <FaChevronDown className="ml-1 text-sm" />
-          </button>
-          {isProfileOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md z-50">
-              <ul className="py-1 text-gray-700 text-sm">
-                <li className="px-4 py-2 hover:bg-gray-100">Profile</li>
-                <li className="px-4 py-2 hover:bg-gray-100">Settings</li>
-                <li className="px-4 py-2 hover:bg-gray-100">Logout</li>
-              </ul>
-            </div>
-          )}
+          <Link to="admin">
+            <img
+              src={user.user.imgProfile.url}
+              className="h-8 w-8 rounded-full"
+              alt=""
+            />
+          </Link>
         </li>
       </ul>
     </div>

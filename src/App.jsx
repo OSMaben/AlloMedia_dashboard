@@ -30,7 +30,6 @@ import Cart from './pages/Cart';
 import RestaurantDetails from "./pages/RestaurantDetails"; 
 import Dashboard from "./admin/Dashboard";
 import DashboardLivreur from "./livreur/dashbord";
-import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
 
 
@@ -80,7 +79,7 @@ function App() {
         <Route path="/restaurant/:id" element={<RestaurantDetails />} />
         <Route path="/cart" element={<Cart />} />
 
-        /> 
+       
 
         <Route path="/admin" element={<AdminProfile />} />
 
@@ -89,7 +88,6 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRouteAdmin>
- AD-1-client/rechercher-restaurants
               <Dashboard />
             </ProtectedRouteAdmin>
           }
@@ -99,10 +97,9 @@ function App() {
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />
 
-              <Dashboards />
-            </ProtectedRouteAdmin>
-          }
-        >
+          
+          
+        
           <Route index element={<MainAdmin />} />
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaCheck, FaTimes, FaTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2"; // Importing SweetAlert2
 import {
   activeResto,
   deleteRestaurant,
@@ -9,59 +10,15 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const AllRestaurants = () => {
-  const restaurants = [
-    {
-      id: 1,
-      name: "La Dolce Vita",
-      imgUrl: "https://placehold.co/32x32",
-      status: "visible",
-      managerName: "Mario Rossi",
-      cuisine: "Italian",
-    },
-    {
-      id: 2,
-      name: "Le Gourmet",
-      imgUrl: "https://placehold.co/32x32",
-      status: "blocked",
-      managerName: "Jean Dupont",
-      cuisine: "French",
-    },
-    {
-      id: 3,
-      name: "Sushi World",
-      imgUrl: "https://placehold.co/32x32",
-      status: "visible",
-      managerName: "Yuki Nakamura",
-      cuisine: "Japanese",
-    },
-    {
-      id: 4,
-      name: "El Mexicano",
-      imgUrl: "https://placehold.co/32x32",
-      status: "visible",
-      managerName: "Carlos Lopez",
-      cuisine: "Mexican",
-    },
-    {
-      id: 5,
-      name: "Spice India",
-      imgUrl: "https://placehold.co/32x32",
-      status: "blocked",
-      managerName: "Raj Patel",
-      cuisine: "Indian",
-    },
-  ];
-
   const dispatch = useDispatch();
   const { restaurantsapproved, restoCounter } = useSelector(
     (state) => state.admin
   );
-  console.log(restaurantsapproved);
 
   const [filteredRestaurants, setFilteredRestaurants] =
     useState(restaurantsapproved);
 
-  // Fetch restaurants and filter list when updated
+  // Fetch restaurants and update the filtered list when updated
   useEffect(() => {
     dispatch(getrestaurantsapproved());
   }, [restoCounter]);
@@ -79,13 +36,41 @@ const AllRestaurants = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteRestaurant({ id }));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteRestaurant({ id }));
+        Swal.fire("Deleted!", "The restaurant has been deleted.", "success");
+      }
+    });
   };
 
   const handleSuspend = (id) => {
-    console.log(id);
-
-    dispatch(suspendResto({ id }));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to suspend this restaurant?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#fbbf24",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, suspend it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(suspendResto({ id }));
+        Swal.fire(
+          "Suspended!",
+          "The restaurant has been suspended.",
+          "success"
+        );
+      }
+    });
   };
 
   return (
@@ -97,7 +82,7 @@ const AllRestaurants = () => {
             <input
               type="text"
               onChange={(e) => searchByName(e)}
-              className="py-2 px-2  bg-gray-50  outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500"
+              className="py-2 px-2 bg-gray-50 outline-none border border-gray-100 rounded-md text-sm focus:border-blue-500"
               placeholder="Search by name..."
             />
             <i className="ri-search-line absolute top-1/2 left-4 -translate-y-1/2 text-gray-400" />
@@ -116,19 +101,19 @@ const AllRestaurants = () => {
         <table className="w-full min-w-[540px]">
           <thead>
             <tr>
-              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Restaurant
               </th>
-              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Status
               </th>
-              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Manager
               </th>
-              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Cuisine
               </th>
-              <th className="text-[12px] hover:text-gray-700 duration-300 transition-all cursor-default uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
+              <th className="text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left">
                 Actions
               </th>
             </tr>
@@ -137,14 +122,14 @@ const AllRestaurants = () => {
             {filteredRestaurants.map((restaurant) => (
               <tr
                 key={restaurant.id}
-                className="hover:bg-gray-50 duration-300 transition-all cursor-default"
+                className="hover:bg-gray-50 transition-all"
               >
-                <td className="py-2 px-4 border-b border-b-gray-50 ">
+                <td className="py-2 px-4 border-b">
                   <div className="flex items-center">
                     <img
                       src={restaurant.logo}
                       alt={restaurant.restoname}
-                      className="w-8 h-8 rounded object-cover block"
+                      className="w-8 h-8 rounded object-cover"
                     />
                     <a
                       href="#"
@@ -154,8 +139,8 @@ const AllRestaurants = () => {
                     </a>
                   </div>
                 </td>
-                <td className="py-2 px-4 border-b border-b-gray-50">
-                  {restaurant.isVisible === true ? (
+                <td className="py-2 px-4 border-b">
+                  {restaurant.isVisible ? (
                     <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                       Visible
                     </span>
@@ -165,25 +150,25 @@ const AllRestaurants = () => {
                     </span>
                   )}
                 </td>
-                <td className="py-2 px-4 border-b border-b-gray-50">
-                  <span className="text-[13px] font-medium text-gray-400 flex gap-2 items-center ">
+                <td className="py-2 px-4 border-b">
+                  <span className="text-[13px] font-medium text-gray-400 flex items-center">
                     <img
                       src={restaurant.managerId.imgProfile.url}
-                      alt="manager photo"
-                      className="w-8 h-8 rounded-full object-cover block"
+                      alt="Manager photo"
+                      className="w-8 h-8 rounded-full object-cover"
                     />
                     {restaurant.managerId.name}
                   </span>
                 </td>
-                <td className="py-2 px-4 border-b border-b-gray-50">
+                <td className="py-2 px-4 border-b">
                   <span className="text-[13px] font-medium text-gray-400">
                     {restaurant.type}
                   </span>
                 </td>
-                <td className="py-2 px-4 border-b border-b-gray-50">
+                <td className="py-2 px-4 border-b">
                   <div className="flex items-center space-x-2">
                     <button className="text-yellow-500 hover:text-yellow-700">
-                      {restaurant.isVisible === true ? (
+                      {restaurant.isVisible ? (
                         <FaTimes
                           className="w-4 h-4"
                           onClick={() => handleSuspend(restaurant._id)}
@@ -200,9 +185,7 @@ const AllRestaurants = () => {
                     <button className="text-red-500 hover:text-red-700">
                       <FaTrashAlt
                         className="w-4 h-4"
-                        onClick={() =>
-                          dispatch(deleteRestaurant({ id: restaurant._id }))
-                        }
+                        onClick={() => handleDelete(restaurant._id)}
                       />
                     </button>
                   </div>

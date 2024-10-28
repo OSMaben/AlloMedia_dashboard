@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2"; // Import SweetAlert
 import { userWithResto } from "../../redux/features/adminSlice";
 import {
   AiOutlineUser,
@@ -20,10 +21,15 @@ const RegistrationForm = () => {
     setError,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-
-    dispatch(userWithResto(data));
+  const onSubmit = async (data) => {
+    const result = await dispatch(userWithResto(data));
+    if (result.meta.requestStatus === "fulfilled") {
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Account created successfully!",
+      });
+    }
   };
 
   return (
@@ -162,22 +168,24 @@ const RegistrationForm = () => {
                 </p>
               )}
             </div>
+
+            {/* Cuisine Field */}
             <div className="relative">
               <label className="block text-sm font-medium mb-1 text-gray-700">
-                Cuisin
+                Cuisine
               </label>
               <div className="flex items-center border rounded-md border-gray-300 p-2">
                 <AiOutlineLock className="text-gray-500 mr-2" />
                 <input
                   type="text"
                   {...register("type", {
-                    required: "Cuisin is required",
+                    required: "Cuisine is required",
                     minLength: {
                       value: 3,
-                      message: "Cuisin must be at least 3 characters",
+                      message: "Cuisine must be at least 3 characters",
                     },
                   })}
-                  placeholder="Enter Cuisin"
+                  placeholder="Enter Cuisine"
                   className={`w-full border-0 bg-transparent focus:outline-none text-sm ${
                     errors.type ? "text-red-500" : "text-gray-800"
                   }`}

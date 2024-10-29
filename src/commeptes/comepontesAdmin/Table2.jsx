@@ -6,6 +6,8 @@ import {
   getRestoPending,
   refuseResto,
 } from "../../redux/features/adminSlice";
+import Swal from "sweetalert2"; // Import SweetAlert2
+
 const Table2 = () => {
   const dispatch = useDispatch();
   const { error, status, isLoading, resturs, restoCounter } = useSelector(
@@ -17,12 +19,39 @@ const Table2 = () => {
   }, [restoCounter]);
 
   const acceptedResto = (id) => {
-    dispatch(accepterResto({ id }));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to accept this restaurant!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, accept it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(accepterResto({ id }));
+        Swal.fire("Accepted!", "The restaurant has been accepted.", "success");
+      }
+    });
   };
 
   const refuserResto = (id) => {
-    dispatch(refuseResto({ id }));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to refuse this restaurant!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, refuse it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(refuseResto({ id }));
+        Swal.fire("Refused!", "The restaurant has been refused.", "success");
+      }
+    });
   };
+
   return (
     <div className="bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md">
       <div className="flex justify-between mb-4 items-start">
@@ -64,7 +93,10 @@ const Table2 = () => {
           </thead>
           <tbody>
             {resturs?.map((item) => (
-              <tr key={item._id} className="hover:bg-gray-50 hover:text-gray-700 duration-300 transition-all cursor-default">
+              <tr
+                key={item._id}
+                className="hover:bg-gray-50 hover:text-gray-700 duration-300 transition-all cursor-default"
+              >
                 <td className="py-2 px-4 border-b border-b-gray-50 hover:text-gray-700 duration-300 transition-all cursor-default">
                   <div className="flex items-center">
                     <img
@@ -117,7 +149,6 @@ const Table2 = () => {
                 </td>
               </tr>
             ))}
-            {/* Repeat the table row structure as needed */}
           </tbody>
         </table>
       </div>

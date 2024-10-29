@@ -3,12 +3,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChartPie,
-  faUser,
-  faUserCircle,
-  faKey,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChartPie, faUser, faUserCircle, faKey } from "@fortawesome/free-solid-svg-icons";
 import {
   Navbar as MTNavbar,
   Collapse,
@@ -40,7 +35,6 @@ const NAV_MENU = [
     icon: faKey,
     path: "/signin",
   },
-
   {
     name: "Dashboard",
     icon: faKey,
@@ -53,16 +47,17 @@ const NAV_MENU = [
   },
 ];
 
+
 const Header = () => {
-  const { isLogin } = useSelector((state) => state.auth);
+  const { isLogin, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
 
-  // Update cart whenever localStorage changes
   useEffect(() => {
+    console.log(user?.user.role);
     const updateCartFromStorage = () => {
       try {
         let items = JSON.parse(localStorage.getItem("restaurantCart")) || [];
@@ -135,6 +130,39 @@ const Header = () => {
     </button>
   );
 
+  const renderButtonsByRole = () => {
+    switch (user?.user?.role) {
+      case "admin":
+        return (
+          <>
+            <NavLink to="/dashboard" className="text-gray-600 hover:text-gray-900">
+              Admin Dashboard
+            </NavLink>
+          </>
+        );
+      case "manager":
+        return (
+          <>
+            <NavLink to="/Manager" className="text-gray-600 hover:text-gray-900">
+              Manager Dashboard
+            </NavLink>
+          </>
+        );
+      case "livreur":
+        return (
+          <>
+            <NavLink to="/livreur" className="text-gray-600 hover:text-gray-900">
+              Livreur Dashboard
+            </NavLink>
+          </>
+        );
+      case "client":
+        return <CartButton />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="px-4 md:px-10 sticky top-0 z-50 bg-white shadow-md">
       <div className="mx-auto container">
@@ -150,20 +178,14 @@ const Header = () => {
             {isLogin && (
               <>
                 <NavLink
-                  to="/dashboard"
-                  className="text-gray-600 hover:text-gray-900"
-                >
-                  admin
-                </NavLink>
-                <NavLink
                   to="/profile"
                   className="text-gray-600 hover:text-gray-900"
                 >
                   Profile
                 </NavLink>
+                {renderButtonsByRole()}
               </>
             )}
-            {isLogin && <CartButton />}
             {!isLogin ? (
               <>
                 <NavLink
@@ -190,7 +212,7 @@ const Header = () => {
           </div>
 
           <div className="md:hidden flex items-center gap-4">
-            <CartButton />
+            {renderButtonsByRole()}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="text-gray-600"

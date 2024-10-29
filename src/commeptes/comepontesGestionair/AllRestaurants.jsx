@@ -8,49 +8,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const AllRestaurants = () => {
-  const restaurants = [
-    {
-      id: 1,
-      name: "La Dolce Vita",
-      imgUrl: "https://placehold.co/32x32",
-      status: "visible",
-      managerName: "Mario Rossi",
-      cuisine: "Italian",
-    },
-    {
-      id: 2,
-      name: "Le Gourmet",
-      imgUrl: "https://placehold.co/32x32",
-      status: "blocked",
-      managerName: "Jean Dupont",
-      cuisine: "French",
-    },
-    {
-      id: 3,
-      name: "Sushi World",
-      imgUrl: "https://placehold.co/32x32",
-      status: "visible",
-      managerName: "Yuki Nakamura",
-      cuisine: "Japanese",
-    },
-    {
-      id: 4,
-      name: "El Mexicano",
-      imgUrl: "https://placehold.co/32x32",
-      status: "visible",
-      managerName: "Carlos Lopez",
-      cuisine: "Mexican",
-    },
-    {
-      id: 5,
-      name: "Spice India",
-      imgUrl: "https://placehold.co/32x32",
-      status: "blocked",
-      managerName: "Raj Patel",
-      cuisine: "Indian",
-    },
-  ];
-
   const dispatch = useDispatch();
   const { restaurantsapproved, restoCounter } = useSelector(
     (state) => state.admin

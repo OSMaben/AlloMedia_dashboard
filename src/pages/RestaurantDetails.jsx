@@ -18,7 +18,7 @@ const RestaurantDetails = () => {
     const fetchRestaurantDetails = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/api/v1/client/restaurants/${restaurantId}`);
+        const response = await fetch(`http://localhost:8080/api/v1/client/${restaurantId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch restaurant details');
         }

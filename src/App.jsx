@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isLogins } from "./redux/features/authSlice";
 
 // Importing components
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import Register from "./pages/regester";
 import Header from "./commeptes/Header";
 
@@ -19,9 +19,11 @@ import ProtectedRoutAuth from "./gaurd/ProtectedRoutAuth";
 import PasswordForm from "./commeptes/PasswordForm";
 import About from "./commeptes/About";
 import Dashboards from "./pages/Dashboards";
+import GestionairDashboard from "./pages/GestionairDashboard"
 import ProtectedRouteAdmin from "./gaurd/ProtectedRouteAdmin";
 import Notifications from "./commeptes/comepontesAdmin/Notifications";
 // import TablesDemande from "./commeptes/comepontesAdmin/TablesDemande";
+import ProtectedRouteGestionair from "./gaurd/ProtectedRouteGestionair"
 import Mains from "./commeptes/comepontesAdmin/Mains";
 import RegistrationForm from "./commeptes/comepontesAdmin/ContactForm";
 import TablesResto from "./commeptes/comepontesAdmin/TablesResto";
@@ -32,14 +34,13 @@ import Dashboard from "./admin/Dashboard";
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
-
 import OrderDetail from "./commeptes/componentLivreur/CommanDetail";
 import CommndPending from "./commeptes/componentLivreur/CommandPending";
 import AcceptedCommandes from "./commeptes/componentLivreur/CommandeAccepted";
 import LivreurStatistics from "./commeptes/componentLivreur/CommandeStatistic";
 import ProfilePage from "./commeptes/componentLivreur/profile";
 import Commandes from "./commeptes/componentLivreur/commandes";
-
+import PageNotFound from "./pages/404"
 import AdminProfile from "./commeptes/comepontesAdmin/AdminProfile";
 import MainAdmin from "./commeptes/comepontesAdmin/MainAdmin";
 
@@ -54,12 +55,14 @@ function App() {
 
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
+  const isManager = location.pathname.startsWith("/Manager");
 
   return (
     <>
       {!isDashboard && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<PageNotFound />} />
         <Route
           path="/dashboard"
           element={
@@ -68,11 +71,20 @@ function App() {
             </ProtectedRouteAdmin>
           }
         >
+         
           <Route index element={<MainAdmin />} />
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />
           <Route path="admin" element={<AdminProfile />} />
         </Route>
+        <Route
+          path="/Manager"
+          element={
+            <ProtectedRouteGestionair>
+              <GestionairDashboard />
+            </ProtectedRouteGestionair>
+          }
+        ></Route>
 
         <Route path="/search" element={<Search />} />
         <Route path="/restaurant/:id" element={<RestaurantDetails />} />

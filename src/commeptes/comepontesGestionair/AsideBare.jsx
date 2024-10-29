@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"; 
 import React, { useState } from "react";
 import {
   RiMenuLine,
@@ -105,10 +106,14 @@ const AsideBare = () => {
                   href="#"
                   className="flex items-center py-2 px-4 text-gray-300 hover:bg-gray-950 hover:text-gray-100 rounded-md"
                 >
-                  <RiInstanceLine className="mr-3 text-lg" />
-                  <span className="text-sm">Orders</span>
-                  <RiArrowRightSLine className="ml-auto" />
+                  
                 </a>
+
+                <Link to={'/restoManagement'}>
+                  <RiInstanceLine className="mr-3 text-lg" />
+                    <span className="text-sm">Resturant</span>
+                  <RiArrowRightSLine className="ml-auto" />
+                </Link>
               </li>
               <li className="mb-1 group">
                 <a

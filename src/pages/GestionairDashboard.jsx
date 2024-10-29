@@ -4,7 +4,7 @@ import MiniHeadre from "../commeptes/comepontesGestionair/MiniHeadre";
 import Analiteque from "../commeptes/comepontesGestionair/Analiteque";
 import TableRestoNo from "../commeptes/comepontesGestionair/TableRestoNo";
 import Statistics from "../commeptes/comepontesGestionair/Statistics";
-
+import AllRestaurants from "../commeptes/comepontesGestionair/AllRestaurants";
 const Dashboards = () => {
   return (
     <>
@@ -15,6 +15,7 @@ const Dashboards = () => {
         <div className="p-6 w-full">
           <Analiteque />
           <TableRestoNo />
+          <AllRestaurants />
           {/* <Statistics /> */}
         </div>
       </main>

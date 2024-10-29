@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isLogins } from "./redux/features/authSlice";
 
 // Importing components
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import Register from "./pages/regester";
 import Header from "./commeptes/Header";
 
@@ -55,6 +55,7 @@ function App() {
 
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
+  const isManager = location.pathname.startsWith("/Manager");
 
   return (
     <>

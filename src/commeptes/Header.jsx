@@ -151,7 +151,7 @@ const Header = () => {
       case "livreur":
         return (
           <>
-            <NavLink to="/livreur" className="text-gray-600 hover:text-gray-900">
+            <NavLink to="/dashboard/livreur" className="text-gray-600 hover:text-gray-900">
               Livreur Dashboard
             </NavLink>
           </>

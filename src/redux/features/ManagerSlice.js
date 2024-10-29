@@ -46,7 +46,7 @@ export const GetOrders = createAsyncThunk(
           state.error = null;
         })
         .addCase(GetOrders.fulfilled, (state, action) => {
-          state.orders = action.payload.orders; // Assigning only the `orders` array from `res.data`
+          state.orders = action.payload.orders ;
           state.loading = false;
         })
         .addCase(GetOrders.rejected, (state, action) => {

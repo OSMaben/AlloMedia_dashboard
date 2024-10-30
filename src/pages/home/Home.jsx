@@ -15,6 +15,7 @@ import Menu from "../../commeptes/homeComponents/Menu";
 import Testimonials from "../../commeptes/homeComponents/testimonials"
 import Footer from "../../commeptes/Footer"
 import { createGlobalStyle } from 'styled-components';
+import { Search } from "../RestaurantSearch";
 
 
 function Home() {
@@ -862,6 +863,7 @@ img {
       <AboutUs />
       <Menu />
       <Testimonials />
+       <Search/>
       <Footer />
     </>
   );

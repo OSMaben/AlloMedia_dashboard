@@ -1,3 +1,4 @@
+
 import { Button, Typography, Card } from "@material-tailwind/react";
 // import BackImg from "../../assets/image8.svg"
 import CoinBase from "../../assets/logo-coinbase.svg"
@@ -15,10 +16,18 @@ import Menu from "../../commeptes/homeComponents/Menu";
 import Testimonials from "../../commeptes/homeComponents/testimonials"
 import Footer from "../../commeptes/Footer"
 import { createGlobalStyle } from 'styled-components';
-import { Search } from "../RestaurantSearch";
+import RestaurantSearch from "../RestaurantSearch";
+import  { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 function Home() {
+  const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
+
+  const handleRestaurantClick = (id) => {
+    navigate(`/restaurant/${id}`);
+  };
 
   const GlobalStyles = createGlobalStyle`
   /* ========== Google Fonts =========== */
@@ -834,6 +843,8 @@ img {
   return (
     <>
     <GlobalStyles/>
+
+    
       <div className="home">
         <div className="row container">
           <div className="col">
@@ -846,7 +857,7 @@ img {
             <h1>
               Get your cuisine <br />
               delivered right to <br />
-              <span className="color">your door </span>
+              <span className="color">your door</span>
             </h1>
             <p>
               Food that is delivered at the right time. The trendy food delivery
@@ -860,10 +871,10 @@ img {
         </div>
       </div>
       <Services />
+      <RestaurantSearch/>
       <AboutUs />
-      <Menu />
+      {/* <Menu /> */}
       <Testimonials />
-       <Search/>
       <Footer />
     </>
   );

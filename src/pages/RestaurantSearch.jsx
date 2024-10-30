@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 
 const RestaurantSearch = () => {
-  
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const [searchResults, setSearchResults] = useState([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
   const [searchCategory, setSearchCategory] = useState("name");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -13,6 +16,10 @@ const RestaurantSearch = () => {
 
   const API_BASE_URL = "http://localhost:8080";
 
+ 
+  const handleRestaurantClick = (id) => {
+    navigate(`/restaurant/${id}`);
+  };
 
   const [datas, setData] = useState([]);
 

@@ -80,9 +80,7 @@ const RestaurantDetails = () => {
     return cartItems.find(item => item.id === itemId)?.quantity || 0;
   };
 
-//   const navigateToCart = () => {
-//     navigate('/cart');
-//   };
+
 
   if (loading) {
     return (

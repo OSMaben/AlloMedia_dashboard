@@ -845,7 +845,7 @@ img {
             <h1>
               Get your cuisine <br />
               delivered right to <br />
-              <span className="color">your door</span>
+              <span className="color">your door </span>
             </h1>
             <p>
               Food that is delivered at the right time. The trendy food delivery

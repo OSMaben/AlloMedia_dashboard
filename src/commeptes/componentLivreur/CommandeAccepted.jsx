@@ -108,48 +108,49 @@ const AcceptedCommandes = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-      {commandes.map((commande) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-8 mx-auto max-w-screen-lg ml-64">
+    {commandes.map((commande) => (
+      <div
+        key={commande._id}
+        className="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden transform transition hover:scale-105 duration-300 dark:bg-gray-800"
+      >
         <div
-          key={commande._id}
-          className="flex flex-col max-w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800"
-        >
-          <div
-            className="h-48 bg-cover"
-            style={{
-              backgroundImage: `url(${fastfoodImage})`
-            }}
-          ></div>
-
-          <div className="p-6">
-            <h1 className="text-xl font-bold text-gray-800 dark:text-white">Commande Acceptée</h1>
-            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-              <strong>Client:</strong> {commande.client.name} <br />
-              <strong>Restaurant:</strong> {commande.restaurantName} <br />
-              <strong>Adresse:</strong> {commande.adress} <br />
-              <strong>Heure:</strong> {new Date(commande.createdAt).toLocaleString()} <br />
-              <strong>Total:</strong> {commande.totalPrice} MAD
-            </p>
-
-            <div className="flex justify-between mt-4">
-              <button
-                className="flex items-center px-4 py-2 text-sm font-bold text-white uppercase transition-colors duration-300 transform bg-green-600 rounded hover:bg-green-500 focus:outline-none"
-                onClick={() => handleConfirmDelivery(commande._id)}
-              >
-                Confirmer Livraison
-              </button>
-
-              <button
-                className="flex items-center px-4 py-2 text-sm font-bold text-white uppercase transition-colors duration-300 transform bg-red-600 rounded hover:bg-red-500 focus:outline-none"
-                onClick={() => handleRestoreOrder(commande._id)}
-              >
-                Retourner
-              </button>
-            </div>
+          className="h-48 bg-cover w-full"
+          style={{
+            backgroundImage: `url(${fastfoodImage})`
+          }}
+        ></div>
+  
+        <div className="p-6 space-y-4">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Commande Acceptée</h1>
+          <p className="text-gray-600 dark:text-gray-400">
+            <strong>Client:</strong> {commande.client.name} <br />
+            <strong>Restaurant:</strong> {commande.restaurantName} <br />
+            <strong>Adresse:</strong> {commande.adress} <br />
+            <strong>Heure:</strong> {new Date(commande.createdAt).toLocaleString()} <br />
+            <strong>Total:</strong> {commande.totalPrice} MAD
+          </p>
+  
+          <div className="flex justify-between mt-4">
+            <button
+              className="flex items-center px-4 py-2 text-sm font-bold text-white uppercase bg-green-600 rounded hover:bg-green-500 transition-colors duration-300 focus:outline-none"
+              onClick={() => handleConfirmDelivery(commande._id)}
+            >
+              Confirmer Livraison
+            </button>
+  
+            <button
+              className="flex items-center px-4 py-2 text-sm font-bold text-white uppercase bg-red-600 rounded hover:bg-red-500 transition-colors duration-300 focus:outline-none"
+              onClick={() => handleRestoreOrder(commande._id)}
+            >
+              Retourner
+            </button>
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
+  </div>
+  
   );
 };
 

@@ -105,7 +105,7 @@ const CommndPending = () => {
   if (commandes.length === 0) return <p>Aucune commande en attente.</p>; // Ajoutez cette ligne
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6  ml-64 bg-white ">
       {commandes.map((commande) => (
         <div
           key={commande._id}

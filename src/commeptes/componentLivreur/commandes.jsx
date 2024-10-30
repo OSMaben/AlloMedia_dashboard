@@ -71,8 +71,8 @@ const CommandesLivreur = () => {
   if (error) return <div>{error}</div>; 
 
   return (
-    <div className="p-6 bg-gray-100">
-    <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+    <div className="p-6 bg-gray-100 flex-1 ml-64 p-4 bg-white">
+    <h1 className="text-3xl font-bold text-center text-gray-800 mb-6 ">
       Commandes du Livreur
     </h1>
   

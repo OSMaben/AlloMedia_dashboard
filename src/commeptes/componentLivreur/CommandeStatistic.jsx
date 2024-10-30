@@ -36,7 +36,7 @@ const LivreurStatistics = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '20px', backgroundColor: '#f0f0f', borderRadius: '10px' ,width:'100%',height: '100%',margin: '0px'}}>
+    <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', backgroundColor: '#f0f0f', borderRadius: '10px' ,width:'100%',height: '100%'}} className='flex-1 ml-64 p-4 bg-white' >
 
       <div>
         <h3>Statistiques Générales des Commandes</h3>

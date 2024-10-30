@@ -25,22 +25,8 @@ const NavBar = () => {
   }, []);
 
   return (
-    <nav className="flex items-center justify-between bg-slate-50 h-16 px-6 shadow-md">
-      {/* Search Bar */}
-      <div className="relative w-64">
-        <input
-          title="Search Bar"
-          aria-label="search bar"
-          role="search"
-          className="w-full pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-teal-500"
-          type="text"
-          placeholder="Search..."
-        />
-        <AiOutlineSearch
-          className="absolute left-3 top-2.5 text-gray-500"
-          size={20}
-        />
-      </div>
+    <nav className=" flex items-center justify-between h-16 px-6 shadow-md flex-1 mb-20 p-4 bg-white ml-64 ">
+    
 
       {/* Notification, Dark Mode, User Profile Icons */}
       <div className="flex items-center space-x-6">

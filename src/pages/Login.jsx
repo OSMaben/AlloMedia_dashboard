@@ -8,6 +8,7 @@ import ModalVerfieLogin from "../commeptes/modal/ModalVerfieLogin";
 import Back from "../assets/back.jpg"
 const Login = () => {
   const { error, status, isLoading } = useSelector((state) => state.auth);
+  console.log('status is',status);
   console.log(error)
   const dispatch = useDispatch();
 

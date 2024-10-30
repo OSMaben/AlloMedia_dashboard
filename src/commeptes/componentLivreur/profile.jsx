@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'; // Importez useEffect et useState
 import axios from 'axios'; // N'oubliez pas d'importer axios
-import 'mdb-react-ui-kit/dist/css/mdb.min.css'; 
 
 import {
   MDBCol,

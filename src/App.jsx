@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"; 
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { isLogins } from "./redux/features/authSlice";
 
@@ -26,27 +26,22 @@ import Mains from "./commeptes/comepontesAdmin/Mains";
 import RegistrationForm from "./commeptes/comepontesAdmin/ContactForm";
 import TablesResto from "./commeptes/comepontesAdmin/TablesResto";
 import Search from "./pages/RestaurantSearch";
-import Cart from './pages/Cart'; 
-import RestaurantDetails from "./pages/RestaurantDetails"; 
+import Cart from "./pages/Cart";
+import RestaurantDetails from "./pages/RestaurantDetails";
 import Dashboard from "./admin/Dashboard";
 import DashboardLivreur from "./livreur/dashbord";
 import NotificationsLiv from "./commeptes/componentLivreur/Notification";
 import MainsLiv from "./commeptes/componentLivreur/Mains";
 
-
 import OrderDetail from "./commeptes/componentLivreur/CommanDetail";
 import CommndPending from "./commeptes/componentLivreur/CommandPending";
 import AcceptedCommandes from "./commeptes/componentLivreur/CommandeAccepted";
 import LivreurStatistics from "./commeptes/componentLivreur/CommandeStatistic";
-import ProfilePage from './commeptes/componentLivreur/profile';
+import ProfilePage from "./commeptes/componentLivreur/profile";
 import Commandes from "./commeptes/componentLivreur/commandes";
-import AdminProfile from "./pages/AdminProfile";
-
-import AdminProfile from "./pages/AdminProfile";
 
 import AdminProfile from "./commeptes/comepontesAdmin/AdminProfile";
 import MainAdmin from "./commeptes/comepontesAdmin/MainAdmin";
-
 
 function App() {
   const { isLogin } = useSelector((state) => state.auth);
@@ -64,41 +59,11 @@ function App() {
     <>
       {!isDashboard && <Header />}
       <Routes>
-         <Route path="/" element={<Home />} />
-        <Route path="/dash" element={<Dashboards />} />
-        <Route path="/admin" element={<AdminProfile />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/dashboard"
           element={
             <ProtectedRouteAdmin>
-              <Dashboard />
-            </ProtectedRouteAdmin>
-          }
-
-        />
-        <Route path="/search" element={<Search />} />
-        <Route path="/restaurant/:id" element={<RestaurantDetails />} />
-        <Route path="/cart" element={<Cart />} />
-
-        /> 
-
-        <Route path="/admin" element={<AdminProfile />} />
-
- 
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRouteAdmin>
- AD-1-client/rechercher-restaurants
-              <Dashboard />
-            </ProtectedRouteAdmin>
-          }
-        >
-          <Route path="notifications" element={<Notifications />} />
-          <Route index element={<Mains />} />
-          <Route path="form" element={<RegistrationForm />} />
-          <Route path="restoActive" element={<TablesResto />} />
-
               <Dashboards />
             </ProtectedRouteAdmin>
           }
@@ -107,31 +72,37 @@ function App() {
           <Route path="form" element={<RegistrationForm />} />
           <Route path="restoActive" element={<TablesResto />} />
           <Route path="admin" element={<AdminProfile />} />
- 
+        </Route>
+
+        <Route path="/search" element={<Search />} />
+        <Route path="/restaurant/:id" element={<RestaurantDetails />} />
+        <Route path="/cart" element={<Cart />} />
+
+        <Route path="/admin" element={<AdminProfile />} />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRouteAdmin>
+              <Dashboard />
+            </ProtectedRouteAdmin>
+          }
+        >
+          <Route index element={<MainAdmin />} />
+          <Route path="form" element={<RegistrationForm />} />
+          <Route path="restoActive" element={<TablesResto />} />
+          <Route path="admin" element={<AdminProfile />} />
         </Route>
 
         <Route path="/dashboard/livreur" element={<DashboardLivreur />}>
           <Route index element={<MainsLiv />} />
 
           <Route path="order-detail/:id" element={<OrderDetail />} />
-          <Route path="order-pending" element={<CommndPending  />} />
+          <Route path="order-pending" element={<CommndPending />} />
           <Route path="commandes-accepted" element={<AcceptedCommandes />} />
           <Route path="statistique" element={<LivreurStatistics />} />
           <Route path="commandes" element={<Commandes />} />
-          <Route path="profile" element={<  ProfilePage />} />
-        </Route>
-
-        <Route
-          path="/livreur"
-          element={
-            <ProtectedRouteAdmin>
-              <DashboardLivreur />
-            </ProtectedRouteAdmin>
-          }
-        >
-          <Route path="notifications" element={<NotificationsLiv />} />
-          <Route index element={<MainsLiv />} />
-
+          <Route path="profile" element={<ProfilePage />} />
         </Route>
 
         <Route
